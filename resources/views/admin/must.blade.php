@@ -1,10 +1,10 @@
-<header class="topbar" data-navbarbg="skin5">
+<header class="topbar" data-navbarbg="skin5" style="background-color: #059669;">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
         <h1 style="color: ivory; padding-left: 1%">Surf<span style="color:#6ee7b7">Ticket</span></h1>
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5" style="background-color: #059669;">
 
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -43,7 +43,7 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" data-sidebarbg="skin6">
+<aside class="left-sidebar" data-sidebarbg="skin6" >
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -65,28 +65,28 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/masterUser"
                         aria-expanded="false">
                         <i class="far fa-address-book" aria-hidden="true"></i>
                         <span class="hide-menu">Master User</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/masterTicket"
                         aria-expanded="false">
                         <i class="fas fa-ticket-alt" aria-hidden="true"></i>
                         <span class="hide-menu">Master Ticket</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/masterPromo"
                         aria-expanded="false">
                         <i class="fas fa-percent" aria-hidden="true"></i>
                         <span class="hide-menu">Master Promo</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/masterTransaksi"
                         aria-expanded="false">
                         <i class="fas fa-exchange-alt" aria-hidden="true"></i>
                         <span class="hide-menu">Transaksi Ticket</span>

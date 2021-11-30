@@ -18,4 +18,20 @@ class adminCTR extends Controller
     function cek_profile(Request $request){
         return response()->json($request);
     }
+
+    function to_mUser(){
+        return view('admin/masUser');
+    }
+
+    function to_mTicket(){
+        return view('admin/masTicket');
+    }
+
+    function to_mPromo(){
+        return view('admin/masPromo');
+    }
+
+    function to_mTrans(){
+        return view('admin/masTrans');
+    }
 }

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Ample Admin Lite Template by WrapPixel</title>
+    <title>Profile Admin</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
@@ -50,8 +50,7 @@
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-12">
                         <div class="white-box">
-                            <div class="user-bg"> <img width="100%" alt="user"
-                                    src="plugins/images/large/img1.jpg">
+                            <div class="user-bg">
                                 <div class="overlay-box">
                                     <div class="user-content">
                                         <a><img src="plugins/images/users/varun.jpg" class="thumb-lg img-circle"
