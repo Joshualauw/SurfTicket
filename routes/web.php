@@ -3,7 +3,8 @@
 use App\Http\Livewire\Pages\Main;
 use App\Http\Livewire\Pages\Login;
 use App\Http\Livewire\Pages\Register;
-use App\Http\Livewire\Components\TheHeader;
+use App\Http\Livewire\Pages\Home;
+use App\Http\Livewire\Pages\Tickets;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Main::class);
 Route::get('/login', Login::class);
 Route::get('/register', Register::class);
+Route::get("/home", Home::class);
+Route::get("/tickets", Tickets::class);
