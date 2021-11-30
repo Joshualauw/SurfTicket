@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string("name", 255);
             $table->string("alamat");
             $table->string('email')->unique();
+            $table->date("no_telp");
             $table->date("tanggal_lahir");
             $table->boolean("isAdmin");
             $table->timestamps();
