@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//USERS
 Route::get('/', Main::class);
 Route::get('/login', Login::class);
 Route::get('/register', Register::class);
