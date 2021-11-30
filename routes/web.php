@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\adminCTR;
 use App\Http\Livewire\Pages\Main;
 use App\Http\Livewire\Pages\Login;
 use App\Http\Livewire\Pages\Register;
@@ -21,3 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Main::class);
 Route::get('/login', Login::class);
 Route::get('/register', Register::class);
+
+Route::get('/admin', [adminCTR::class, 'to_adminHome']);
+Route::get('/profileAdmin',[adminCTR::class, 'to_profileAdmin']);
+Route::post('/cek_profileAdmin', [adminCTR::class, 'cek_profile']);
