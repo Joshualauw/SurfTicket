@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Models\User;
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class Register extends Component
 {
@@ -11,9 +13,10 @@ class Register extends Component
     public $email;
     public $alamat;
     public $no_telp;
+    public $confirm_password;
 
 
-    public function registerUser()
+    public function registerUser(Request $request)
     {
     }
 
