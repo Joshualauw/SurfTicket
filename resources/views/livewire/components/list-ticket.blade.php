@@ -7,12 +7,32 @@
                 class="rounded-md w-80 flex justify-center items-center relative cursor-pointer hover:scale-110 hover:opacity-60 transition transform duration-300 overflow-hidden">
                 <img src="{{ $ticket['img_dir'] }}" class="bg-cover w-full h-full" alt="">
                 <div class="absolute bg-red-600 text-white text-md p-2 top-0 right-0">20%</div>
-                <span class="absolute bottom-0 text-white w-full h-12 text-center text-lg"
-                    style="background-image: url('https://cdn.myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')">{{
-                    $ticket['nama'] }}</span>
+                <span class="absolute -bottom-2 text-white w-full h-16 text-center text-lg"
+                    style="background-image: url('https://cdn.myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')">
+                    <p>{{$ticket['nama'] }}</p>
+                    <p>{{ rand(10, 100) }} tersisa</p>
+                </span>
             </div>
             @endforeach
         </div>
     </div>
-    @endif
+
+    @else
+    <div class="grid grid-cols-5 gap-5">
+        @for ($i = 0; $i < 2; $i++) @foreach ($tickets as $ticket) <div
+            class="rounded-md w-64 flex justify-center items-center relative cursor-pointer hover:scale-105 hover:opacity-60 transition transform duration-300 overflow-hidden">
+            <img src="{{ $ticket['img_dir'] }}" class="bg-cover w-full h-full" alt="">
+            <span class="absolute -bottom-2 text-white w-full h-16 text-center text-md"
+                style="background-image: url('https://cdn.myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')">
+                <p>{{$ticket['nama'] }}</p>
+                <p>{{ rand(10, 100) }} tersisa</p>
+            </span>
+    </div>
+    @endforeach
+    @endfor
+</div>
+
+@endif
+
+
 </div>
