@@ -1,5 +1,5 @@
-<div class="h-screen"
-    style="background: url(https://media.istockphoto.com/photos/tropical-white-sand-beach-with-coco-palms-picture-id1181563943?k=20&m=1181563943&s=612x612&w=0&h=r46MQMvFnvrzzTfjVmvZED5nZyTmAYwISDvkdtM2i2A=) no-repeat; background-size: cover">
+<div class="h-screen" wire:poll.9000ms='swapBackground'
+    style="background: url({{ $backgroundImage }}) no-repeat; background-size: cover">
 
     <div class="flex flex-col justify-center items-center h-full w-3/4 mx-auto">
         <p wire:click="changeIntro" wire:poll.5000ms="changeIntro"

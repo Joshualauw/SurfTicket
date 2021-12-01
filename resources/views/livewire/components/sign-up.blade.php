@@ -1,5 +1,5 @@
 <div class="w-full border-t-4 border-green-800">
-    <div class="w-full mx-auto py-4 px-24" style="height: 600px;">
+    <div class="w-full mx-auto py-4 px-24" style="height: 550px;">
         <p class="text-green-700 font-semibold text-4xl my-8">Daftar Sekarang</p>
         <div class="flex justify-between">
             <div>
