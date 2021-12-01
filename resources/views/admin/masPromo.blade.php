@@ -56,7 +56,6 @@
                                             <th class="border-top-0">Kode Promo</th>
                                             <th class="border-top-0">Nama Promo</th>
                                             <th class="border-top-0">Diskon</th>
-                                            <th class="border-top-0">Status</th>
                                             <th class="border-top-0">Action</th>
                                         </tr>
                                     </thead>
@@ -65,9 +64,6 @@
                                             <td>SURFTICKETMANTAP</td>
                                             <td>Diskon Launching</td>
                                             <td>25%</td>
-                                            <td style="color:lime">
-                                                Aktif
-                                            </td>
                                             <td>
                                                 <button class="btn btn-warning d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
                                                 >Edit</button>

@@ -27,7 +27,7 @@
                 <!-- ============================================================== -->
                 <li>
                     <a class="profile-pic" href="/profileAdmin">
-                        <img src="plugins/images/users/varun.jpg" alt="user-img" width="36"
+                        <img src="{{URL::asset('plugins/images/users/varun.jpg')}}" alt="user-img" width="36"
                             class="img-circle"><span class="text-white font-medium">Admin Melon</span></a>
                 </li>
                 <!-- ============================================================== -->

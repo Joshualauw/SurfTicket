@@ -35,3 +35,7 @@ Route::get('/masterPromo', [adminCTR::class, 'to_mPromo']);
 Route::get('/masterTransaksi', [adminCTR::class, 'to_mTrans']);
 Route::post('/cek_ticketBaru',[adminCTR::class, 'cek_addTicket']);
 Route::post('/cek_changePromo',[adminCTR::class, 'change_promo']);
+
+Route::get('/detailTicket/{id}', [adminCTR::class, 'to_dtlTicket']);
+Route::post('/cek_updateTicket',[adminCTR::class, 'cek_uptTicket']);
+Route::post('/cek_changeJadwal',[adminCTR::class, 'change_jadwal']);

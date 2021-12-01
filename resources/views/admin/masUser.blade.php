@@ -96,7 +96,7 @@
                 </div>
                 <div class="modal-body p-4 py-5 p-md-5">
                     <h3 class="text-center mb-3">Tambahkan Admin Baru </h3>
-                    <form action="/cek_adminBaru" method="post" class="signup-form">
+                    <form action="/cek_adminBaru"  enctype="multipart/form-data" method="post" class="signup-form">
                         <div class="form-group mb-2">
                             <label for="name">Nama</label>
                             <input type="text" class="form-control" name="nm_txt" placeholder="Nama">
@@ -112,6 +112,10 @@
                         <div class="form-group mb-2">
                             <label for="password">Konfirmasi Password</label>
                             <input type="password" class="form-control" name="kf_txt" placeholder="konfirmasi Password">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Foto Profile</label>
+                            <input type="file" name="ft_txt" class="form-control">
                         </div>
                         <div class="form-group mb-2">
                             <button type="submit" class="form-control btn btn-primary rounded submit px-3">Register</button>
