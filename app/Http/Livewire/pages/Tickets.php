@@ -10,6 +10,6 @@ class Tickets extends Component
     {
         return view('livewire.pages.tickets')
             ->extends('layouts.app')
-            ->section('content');;
+            ->section('content');
     }
 }

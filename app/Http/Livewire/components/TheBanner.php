@@ -8,8 +8,14 @@ class TheBanner extends Component
 {
     public $image = ["https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/0/01/2020-11-10_Farewell_of_Snezhnaya.jpg?width=1280", "https://foto.kontan.co.id/UGT1GUE07cQPxVSyYyL-ihLsQ6k=/smart/2021/02/03/985934458p.jpg", "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2020/10/18/1335768913.jpg", "https://gamedaim.com/wp-content/uploads/2021/07/Gentry-of-Hermitage-2-800x395.jpg"];
 
-    public $imgCounter = 0;
-    public $bannerCount = 4;
+    public $imgCounter;
+    public $bannerCount;
+
+    public function mount()
+    {
+        $this->imgCounter = 0;
+        $this->bannerCount = 4;
+    }
 
     public function swipeLeft()
     {
