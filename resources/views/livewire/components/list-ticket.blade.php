@@ -17,7 +17,7 @@
     </div>
 
     @else
-    <div class="grid grid-cols-4 gap-10">
+    <div class="grid grid-cols-4 gap-8">
         @for ($i = 0; $i < 2; $i++) @foreach ($tickets as $ticket) <a href="/ticket/{{ $ticket['id'] }}"
             class="rounded-md w-full h-52 flex justify-center items-center relative cursor-pointer hover:scale-105 hover:opacity-60 transition transform duration-300 overflow-hidden">
             <img src="{{ $ticket['img_dir'] }}" class="bg-cover w-full h-full" alt="">
