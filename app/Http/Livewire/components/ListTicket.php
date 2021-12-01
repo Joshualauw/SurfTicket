@@ -70,6 +70,11 @@ class ListTicket extends Component
         ]
     ];
 
+    public function test()
+    {
+        dd("TES");
+    }
+
     public function mount($layout)
     {
         $this->layout = $layout;

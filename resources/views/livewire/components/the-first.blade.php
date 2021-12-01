@@ -1,7 +1,13 @@
-<div class="flex flex-col justify-center items-center h-full w-1/2 mx-auto mt-12">
-    <p wire:click="changeIntro" wire:poll.5000ms="changeIntro" class="text-6xl text-center cursor-pointer">
-        Pesan Tiket Liburan dengan <span class="text-green-600">{{ $intro }}</span> di SurfTicket</p>
-    <button type="button" class="bg-green-600 hover:bg-green-500 p-3 text-white rounded-lg text-lg mt-10">
-        <a href="/home">Pesan Sekarang</a>
-    </button>
+<div class="h-screen"
+    style="background: url(https://media.istockphoto.com/photos/tropical-white-sand-beach-with-coco-palms-picture-id1181563943?k=20&m=1181563943&s=612x612&w=0&h=r46MQMvFnvrzzTfjVmvZED5nZyTmAYwISDvkdtM2i2A=) no-repeat; background-size: cover">
+
+    <div class="flex flex-col justify-center items-center h-full w-3/4 mx-auto">
+        <p wire:click="changeIntro" wire:poll.5000ms="changeIntro"
+            class="text-6xl text-gray-50 text-center font-semibold cursor-pointer">
+            Mau Pesan Tiket Liburan dengan <span class="text-green-100">{{ $intro }}</span> Yuk Pesan di SurfTicket!
+        </p>
+        <button type="button" class="bg-green-700 hover:bg-green-500 py-3 px-10 text-white rounded-lg text-lg mt-10">
+            <a href="/home">Cari Tiket</a>
+        </button>
+    </div>
 </div>

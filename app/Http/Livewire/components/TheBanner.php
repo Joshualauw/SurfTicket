@@ -6,7 +6,12 @@ use Livewire\Component;
 
 class TheBanner extends Component
 {
-    public $image = ["https://oyster.ignimgs.com/mediawiki/apis.ign.com/genshin-impact/0/01/2020-11-10_Farewell_of_Snezhnaya.jpg?width=1280", "https://foto.kontan.co.id/UGT1GUE07cQPxVSyYyL-ihLsQ6k=/smart/2021/02/03/985934458p.jpg", "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2020/10/18/1335768913.jpg", "https://gamedaim.com/wp-content/uploads/2021/07/Gentry-of-Hermitage-2-800x395.jpg"];
+    public $image = [
+        "https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/discovery-mobile/promo/2021/09/23/6fe44ff2-4895-4fc4-a45b-c09899f1335b-1632392917482-04349ba60c9ed962f4159e3f10938916.png",
+        "https://foto.kontan.co.id/UGT1GUE07cQPxVSyYyL-ihLsQ6k=/smart/2021/02/03/985934458p.jpg",
+        "https://cdn4.vectorstock.com/i/1000x1000/68/23/special-promotion-buy-now-mega-discount-only-month-vector-23056823.jpg",
+        "https://media.istockphoto.com/vectors/flash-sale-discount-banner-template-promotion-design-for-business-vector-id1173515188"
+    ];
 
     public $imgCounter;
     public $bannerCount;

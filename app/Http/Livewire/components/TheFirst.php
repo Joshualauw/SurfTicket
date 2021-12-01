@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class TheFirst extends Component
 {
-    public $prefix = ["murah", "mudah", "cepat", "praktis", "istimewa", "terpercaya", "aman"];
+    public $prefix = ["murah?", "mudah?", "cepat?", "praktis?", "istimewa?", "terpercaya?", "aman?"];
     public $intro;
 
     public function changeIntro()

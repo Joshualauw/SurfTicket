@@ -18,47 +18,6 @@ class Ticket extends Component
         "harga" => 100000
     ];
 
-    public $jadwal = [
-        [
-            "id" => 1,
-            "hari" => "senin",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 2,
-            "hari" => "senin",
-            "jam" => "14.00 - 16.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 3,
-            "hari" => "rabu",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ]
-    ];
-
-    public $buyTickets;
-
-    public function mount()
-    {
-        $this->buyTickets = [];
-        for ($i = 0; $i < count($this->jadwal); $i++) {
-            $this->buyTickets[$i] = 0;
-        }
-    }
-
-    public function decKuota($ctr)
-    {
-        $this->buyTickets[$ctr]--;
-    }
-
-    public function incKuota($ctr)
-    {
-        $this->buyTickets[$ctr]++;
-    }
-
     public function render()
     {
         return view('livewire.pages.ticket')
