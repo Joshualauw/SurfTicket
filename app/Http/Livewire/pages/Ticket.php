@@ -9,12 +9,12 @@ class Ticket extends Component
 {
     public $ticket = [
         "id" => 2,
-        "nama" => "Inazuma City",
-        "img_dir" => "https://static.wikia.nocookie.net/gensin-impact/images/4/43/Inazuma_City.png",
-        "deskripsi" => "Inazuma's most lively and prosperous area, where most of Inazuma's population lives. From Hanamizaka to the streets of the city, you can follow the trail to visit local traditional shops and sample Inazuma specialties.",
+        "nama" => "Eco Green Park",
+        "img_dir" => "https://tempatasik.com/wp-content/uploads/2019/08/eco-green-park.jpg",
+        "deskripsi" => "Di tempat wisata ini kalian bisa puas mengelilingi banyak wahana yang ada sekaligus belajar banyak tentang alam. Tentunya semua wahana yang ada di Eco Green Park bisa dinikmati oleh semua anggota keluarga.",
         "provinsi" => "Jawa Timur",
-        "kota" => "Surabaya",
-        "kecamatan" => "Lakarsantri",
+        "kota" => "Batu",
+        "kecamatan" => "Batu",
         "harga" => 100000
     ];
 

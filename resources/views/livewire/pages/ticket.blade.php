@@ -11,7 +11,7 @@
         <div class="flex justify-center items-center h-72 w-full my-10">
             <img src="{{ $ticket['img_dir'] }}" class="bg-cover w-2/5 h-full" alt="">
             <div class="w-3/5 h-full pl-4 overflow-auto">
-                <p class="w-full text-2xl font-semibold">Inazuma City</p>
+                <p class="w-full text-2xl font-semibold">{{ $ticket['nama'] }}</p>
                 <p class="w-full text-lg mt-2">{{ $ticket['deskripsi'] }}</p>
                 <p class="w-full text-lg mt-2">Provinsi: {{ $ticket['provinsi'] }}</p>
                 <p class="w-full text-lg mt-2">Kota: {{ $ticket['kota'] }}</p>
