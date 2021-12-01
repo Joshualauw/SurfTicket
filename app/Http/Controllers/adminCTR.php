@@ -34,4 +34,8 @@ class adminCTR extends Controller
     function to_mTrans(){
         return view('admin/masTrans');
     }
+
+    function cek_addTicket(Request $request){
+        return response()->json($request);
+    }
 }
