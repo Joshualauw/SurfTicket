@@ -10,6 +10,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
     <link href="css/style.min.css" rel="stylesheet">
 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </head>
 
 <body>
@@ -29,10 +33,10 @@
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
                             </ol>
-                            <a href="/addAdmin"
+                            <button data-toggle="modal" data-target="#exampleModalCenter"
                                 class="btn btn-primary d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
                                 Tambahkan Promo Baru
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -51,10 +55,7 @@
                                         <tr>
                                             <th class="border-top-0">Kode Promo</th>
                                             <th class="border-top-0">Nama Promo</th>
-                                            <th class="border-top-0">Nama Ticket</th>
                                             <th class="border-top-0">Diskon</th>
-                                            <th class="border-top-0">Harga</th>
-                                            <th class="border-top-0">Status</th>
                                             <th class="border-top-0">Action</th>
                                         </tr>
                                     </thead>
@@ -62,18 +63,10 @@
                                         <tr>
                                             <td>SURFTICKETMANTAP</td>
                                             <td>Diskon Launching</td>
-                                            <td>Jogja Bay</td>
                                             <td>25%</td>
                                             <td>
-                                                <span class="text-muted text-decoration-line-through">Rp. 150.000</span>
-                                                Rp. 112.500
-                                            </td>
-                                            <td style="color:lime">
-                                                Aktif
-                                            </td>
-                                            <td>
                                                 <button class="btn btn-warning d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
-                                                >Ubah status</button>
+                                                >Edit</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -86,4 +79,51 @@
         </div>
 
     </div>
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn btn-outline-dark d-flex align-items-center justify-content-center"
+                        data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-4 py-5 p-md-5">
+                    <h3 class="text-center mb-3">Tambahkan Promo Baru </h3>
+                    <form action="/cek_changePromo" method="post" enctype="multipart/form-data" class="signup-form">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <label>Kode Promo</label>
+                            <input type="text" class="form-control" name="kd_txt" placeholder="kode promo">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Nama</label>
+                            <input type="text" class="form-control" name="nm_txt" placeholder="nama promo">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Deskripsi</label>
+                            <textarea name="ds_txt" class="form-control" placeholder="deskripsi" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Presentase Diskon</label>
+                            <input type="number" min="0" name="dk_txt" class="form-control"
+                                placeholder="diskon">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Banner Promo</label>
+                            <input type="file" name="gb_txt" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">add promo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>

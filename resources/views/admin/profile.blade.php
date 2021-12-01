@@ -12,10 +12,7 @@
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Profile Admin</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
 </head>
 
@@ -33,21 +30,11 @@
                         <h4 class="page-title">Profile</h4>
                     </div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+
+
             <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <!-- Row -->
                 <div class="row">
-                    <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-12">
                         <div class="white-box">
                             <div class="user-bg">
@@ -62,8 +49,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
-                    <!-- Column -->
+
+
                     <div class="col-lg-8 col-xlg-9 col-md-12">
                         <div class="card">
                             <div class="card-body">
@@ -115,7 +102,7 @@
                                         <label class="col-sm-12">Tanggal Lahir</label>
 
                                         <div class="col-sm-12 border-bottom">
-                                            <input type="date" name="tgl_txt" value="1997-12-12">
+                                            <input type="date" name="tgl_txt" value="1997-12-12" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
@@ -127,19 +114,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
+                   
                 </div>
-                <!-- Row -->
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+
             </div>
 
         </div>

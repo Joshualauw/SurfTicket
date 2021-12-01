@@ -34,4 +34,24 @@ class adminCTR extends Controller
     function to_mTrans(){
         return view('admin/masTrans');
     }
+
+    function cek_addTicket(Request $request){
+        return response()->json($request);
+    }
+
+    function change_promo(Request $request){
+        return response()->json($request);
+    }
+
+    function to_dtlTicket(Request $request){
+        return view('admin/detailTicket');
+    }
+
+    function cek_uptTicket(Request $request){
+        return response()->json($request);
+    }
+
+    function change_jadwal(Request $request){
+        return response()->json($request);
+    }
 }

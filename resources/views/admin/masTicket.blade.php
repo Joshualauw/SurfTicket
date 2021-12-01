@@ -10,6 +10,13 @@
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
     <link href="css/style.min.css" rel="stylesheet">
 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
 <body>
@@ -29,10 +36,10 @@
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
                             </ol>
-                            <a href="/addAdmin"
+                            <button data-toggle="modal" data-target="#exampleModalCenter"
                                 class="btn btn-primary d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
                                 Tambahkan Ticket Baru
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -44,7 +51,8 @@
 
                             <div class="col mb-5">
                                 <div class="card h-100">
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                                    <img class="card-img-top"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Jogja_Bay_Logo.png"
                                         alt="..." />
                                     <!-- Product details-->
                                     <div class="card-body p-4">
@@ -52,7 +60,8 @@
                                             <!-- Product name-->
                                             <h5 class="fw-bolder">Ticket Bali Zoo</h5>
                                             <!-- Product price-->
-                                            Rp. 125.000
+                                            Rp. 125.000 <br>
+                                            Kuota : 32/50
                                         </div>
                                     </div>
                                     <!-- Product actions-->
@@ -70,7 +79,8 @@
                             <div class="col mb-5">
                                 <div class="card h-100">
 
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                                    <img class="card-img-top"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Jogja_Bay_Logo.png"
                                         alt="..." />
                                     <!-- Product details-->
                                     <div class="card-body p-4">
@@ -78,6 +88,8 @@
                                             <!-- Product name-->
                                             <h5 class="fw-bolder">Jogja Bay</h5>
                                             Rp. 150.000
+                                            <br>
+                                            Kuota : 30/150
                                         </div>
                                     </div>
                                     <!-- Product actions-->
@@ -98,4 +110,84 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn btn-outline-dark d-flex align-items-center justify-content-center"
+                        data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-4 py-5 p-md-5">
+                    <h3 class="text-center mb-3">Tambah Ticket Baru </h3>
+                    <form action="/cek_ticketBaru" method="post" enctype="multipart/form-data" class="signup-form">
+                        @csrf
+                        <div class="form-group mb-2">
+                            <label>Nama</label>
+                            <input type="text" class="form-control" name="nm_txt" placeholder="Nama tempat wisata">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Deskripsi</label>
+                            <textarea name="ds_txt" class="form-control" placeholder="deskripsi" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Harga</label>
+                            <input type="text" name="hr_txt" class="form-control" placeholder="Harga Ticket"
+                                onkeypress='validate(event)'>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Ticket Banner</label>
+                            <input type="file" name="gb_txt" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Kuota</label>
+                            <input type="number" min="0" name="ku_txt" class="form-control"
+                                placeholder="Kuota Ticket">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Tempat</label> <br>
+                            <select class="custom-select form-control" name="tp_txt">
+                                <optgroup label="Bali">
+                                    <option value="vp1+vk1">Ginayar</option>
+                                    <option value="vp1+vk2">Denpasar</option>
+                                    <option value="vp1+vk3">Gilimanuk</option>
+                                </optgroup>
+
+                                <optgroup label="Jawa Timur">
+                                  <option value="vp2+vk1">Surabaya</option>
+                                  <option value="vp2+vk2">Malang</option>
+                                  <option value="vp2+vk3">Blitar</option>
+                                </optgroup>
+                              </select>
+                        </div>
+                        <div class="form-group mb-2">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    </script>
 </body>
