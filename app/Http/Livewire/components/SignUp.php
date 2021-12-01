@@ -20,6 +20,14 @@ class SignUp extends Component
         $this->computedRegister = $active === "register" ? "font-semibold text-lg" : "";
     }
 
+    public function login()
+    {
+    }
+
+    public function register()
+    {
+    }
+
     public function render()
     {
         return view('livewire.components.sign-up');

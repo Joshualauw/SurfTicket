@@ -28,7 +28,25 @@ class JadwalTiket extends Component
             "hari" => "rabu",
             "jam" => "08.00 - 12.00",
             "kuota" => 20
-        ]
+        ],
+        [
+            "id" => 4,
+            "hari" => "kamis",
+            "jam" => "08.00 - 12.00",
+            "kuota" => 20
+        ],
+        [
+            "id" => 5,
+            "hari" => "sabtu",
+            "jam" => "08.00 - 12.00",
+            "kuota" => 20
+        ],
+        [
+            "id" => 6,
+            "hari" => "minggu",
+            "jam" => "08.00 - 12.00",
+            "kuota" => 20
+        ],
     ];
 
     public function mount()

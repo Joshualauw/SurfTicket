@@ -2,12 +2,12 @@
     <div class="w-1/5 h-full p-5">
         <p class="text-xl font-semibold">
             <i class="fas fa-user-friends"></i>
-            60 Tiket Tersedia
+            120 Tiket Tersedia
         </p>
         <p class="text-xl font-semibold">Rp. 100.000,00</p>
     </div>
-    <div class="w-4/5 p-5 h-full overflow-auto">
-        <div class="container w-full">
+    <div class="w-4/5 p-5 h-full">
+        <div class="container w-full h-full overflow-auto">
             <div class="flex flex-col flex-none">
                 <div class="w-full">
                     <table class="w-full text-center">
