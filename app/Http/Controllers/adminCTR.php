@@ -38,4 +38,8 @@ class adminCTR extends Controller
     function cek_addTicket(Request $request){
         return response()->json($request);
     }
+
+    function change_promo(Request $request){
+        return response()->json($request);
+    }
 }

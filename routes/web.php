@@ -25,18 +25,13 @@ Route::get('/login', Login::class);
 Route::get('/register', Register::class);
 Route::get("/home", Home::class);
 Route::get("/tickets", Tickets::class);
+
 Route::get('/admin', [adminCTR::class, 'to_adminHome']);
 Route::get('/profileAdmin',[adminCTR::class, 'to_profileAdmin']);
 Route::post('/cek_profileAdmin', [adminCTR::class, 'cek_profile']);
-<<<<<<< Updated upstream
-Route::get('/masterUser',[adminCTR::class, 'to_mUser']);
-Route::get('/masterTicket',[adminCTR::class, 'to_mTicket']);
-Route::get('/masterPromo',[adminCTR::class, 'to_mPromo']);
-Route::get('/masterTransaksi',[adminCTR::class, 'to_mTrans']);
-=======
 Route::get('/masterUser', [adminCTR::class, 'to_mUser']);
 Route::get('/masterTicket', [adminCTR::class, 'to_mTicket']);
 Route::get('/masterPromo', [adminCTR::class, 'to_mPromo']);
 Route::get('/masterTransaksi', [adminCTR::class, 'to_mTrans']);
 Route::post('/cek_ticketBaru',[adminCTR::class, 'cek_addTicket']);
->>>>>>> Stashed changes
+Route::post('/cek_changePromo',[adminCTR::class, 'change_promo']);

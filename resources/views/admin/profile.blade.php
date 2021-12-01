@@ -115,7 +115,7 @@
                                         <label class="col-sm-12">Tanggal Lahir</label>
 
                                         <div class="col-sm-12 border-bottom">
-                                            <input type="date" name="tgl_txt" value="1997-12-12">
+                                            <input type="date" name="tgl_txt" value="1997-12-12" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
