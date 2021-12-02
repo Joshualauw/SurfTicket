@@ -4,11 +4,16 @@ namespace App\Http\Livewire\Components;
 
 use App\Models\Ticket;
 use Livewire\Component;
+use Livewire\WithPagination;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ListTicket extends Component
 {
+    use WithPagination;
+
     public $layout = 'grid';
-    public $tickets;
+    public $param;
 
     protected $listeners = [
         "filterChanged"
@@ -16,39 +21,46 @@ class ListTicket extends Component
 
     public function filterChanged($param)
     {
-
-        $queries = [];
-        $searchQuery = ["nama", "like", '%' . $param["searchFilter"] . '%'];
-        $provinsiQuery = ["provinsi_id", "=", $param["provinsiFilter"]];
-        $kotaQuery = ["kota_id", "=", $param["kotaFilter"]];
-
-        if ($param["searchFilter"] != null) {
-            array_push($queries, $searchQuery);
-        }
-        if ($param["provinsiFilter"] != null) {
-            array_push($queries, $provinsiQuery);
-        }
-        if ($param["kotaFilter"] != null) {
-            array_push($queries, $kotaQuery);
-        }
-
-        if ($queries != []) {
-            $this->tickets = Ticket::where($queries)->get();
-        } else {
-            $this->tickets = Ticket::all();
-        }
+        $this->param = $param;
     }
 
     public function mount($layout)
     {
         $this->layout = $layout;
-        $this->tickets = Ticket::all();
+        $this->param = [
+            "searchFilter" => "",
+            "provinsiFilter" => "all",
+            "kotaFilter" => "all"
+        ];
     }
 
     public function render()
     {
+        $queries = [];
+        $tickets = Ticket::paginate(12);
+
+        $searchQuery = ["nama", "like", '%' . $this->param["searchFilter"] . '%'];
+        $provinsiQuery = ["provinsi_id", "=", $this->param["provinsiFilter"]];
+        $kotaQuery = ["kota_id", "=", $this->param["kotaFilter"]];
+
+        if ($this->param["searchFilter"] != "") {
+            array_push($queries, $searchQuery);
+        }
+        if ($this->param["provinsiFilter"] != "all") {
+            array_push($queries, $provinsiQuery);
+        }
+        if ($this->param["provinsiFilter"] != "all" && $this->param["kotaFilter"] != "all") {
+            array_push($queries, $kotaQuery);
+        }
+
+        // dump($queries);
+
+        if ($queries != []) {
+            $tickets = Ticket::where($queries)->paginate(12);
+        }
+
         return view('livewire.components.list-ticket', [
-            "tickets" => $this->tickets
+            "tickets" => $tickets
         ]);
     }
 }

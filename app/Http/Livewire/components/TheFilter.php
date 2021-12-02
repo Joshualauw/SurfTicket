@@ -8,9 +8,9 @@ use Livewire\Component;
 
 class TheFilter extends Component
 {
-    public $searchFilter;
-    public $provinsiFilter = 11;
-    public $kotaFilter;
+    public $searchFilter = "";
+    public $provinsiFilter = "all";
+    public $kotaFilter = "all";
 
     public function render()
     {

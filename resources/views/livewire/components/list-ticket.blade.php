@@ -8,12 +8,14 @@
                 <img src="{{ $ticket['img_dir'] }}" class="bg-cover w-full h-full" alt="">
                 <span class="absolute -bottom-2 text-white w-full h-16 text-center text-lg"
                     style="background-image: url('https://cdn.myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')">
-                    <p>{{$ticket['nama'] }}</p>
-                    <p>{{ rand(10, 100) }} tersisa</p>
+                    @if (count($ticket->jadwal) <= 0) <p class="text-red-400">Jadwal Kosong</p>
+                        @else
+                        <p>{{ count($ticket->jadwal) }} jadwal tersisa</p>
+                        @endif
                 </span>
             </a>
             @endforeach
-            {{-- {{ $tickets->links() }} --}}
+            {{ $tickets->links() }}
         </div>
     </div>
 
@@ -26,11 +28,14 @@
             <span class="absolute -bottom-2 text-white w-full h-1/3 text-center text-lg"
                 style="background-image: url('https://cdn.myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')">
                 <p>{{$ticket['nama'] }}</p>
-                <p>{{ rand(10, 100) }} tersisa</p>
+                @if (count($ticket->jadwal) <= 0) <p class="text-red-400">Jadwal Kosong</p>
+                    @else
+                    <p>{{ count($ticket->jadwal) }} jadwal tersisa</p>
+                    @endif
             </span>
         </a>
         @endforeach
-        {{-- {{ $tickets->links() }} --}}
+        {{ $tickets->links() }}
     </div>
     @endif
 
