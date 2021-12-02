@@ -19,8 +19,10 @@ class TicketSeeder extends Seeder
     {
         Ticket::factory()->count(20)->state(new Sequence(
             function () {
+                $provinsi = Provinsi::all()->random();
                 return [
-                    "kota_id" => Kota::all()->random()
+                    "provinsi_id" => $provinsi,
+                    "kota_id" => Kota::where("provinsi_id", "=", $provinsi->id)->get()->random()
                 ];
             }
         ))->create();

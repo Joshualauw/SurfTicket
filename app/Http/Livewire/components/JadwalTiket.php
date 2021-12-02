@@ -2,61 +2,31 @@
 
 namespace App\Http\Livewire\Components;
 
+use App\Models\Jadwal;
 use Livewire\Component;
 
 class JadwalTiket extends Component
 {
-    public $buyTickets;
     public $totalBiaya;
+    public $totalTicket;
+    public $totalJadwal;
+
+    public $buyTickets;
     public $hargaTiket;
+    public $jadwal;
 
-    public $jadwal = [
-        [
-            "id" => 1,
-            "hari" => "senin",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 2,
-            "hari" => "senin",
-            "jam" => "14.00 - 16.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 3,
-            "hari" => "rabu",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 4,
-            "hari" => "kamis",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 5,
-            "hari" => "sabtu",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-        [
-            "id" => 6,
-            "hari" => "minggu",
-            "jam" => "08.00 - 12.00",
-            "kuota" => 20
-        ],
-    ];
-
-    public function mount()
+    public function mount($ticket)
     {
         $this->totalBiaya = 0;
+        $this->totalTicket = 0;
         $this->buyTickets = [];
-        $this->hargaTiket = 100000;
+        $this->hargaTiket = $ticket->harga;
+        $this->jadwal = Jadwal::where("ticket_id", "=", $ticket->id)->get();
+        $this->totalJadwal = count($this->jadwal);
 
         for ($i = 0; $i < count($this->jadwal); $i++) {
             $this->buyTickets[$i] = 0;
+            $this->totalTicket += $this->jadwal[$i]->kuota;
         }
     }
 

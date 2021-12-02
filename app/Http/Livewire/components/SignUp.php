@@ -16,8 +16,8 @@ class SignUp extends Component
 
     public function setNavTab($active)
     {
-        $this->computedLogin = $active === "login" ? "font-semibold text-lg" : "";
-        $this->computedRegister = $active === "register" ? "font-semibold text-lg" : "";
+        $this->computedLogin = $active === "login" ? "font-semibold text-xl" : "";
+        $this->computedRegister = $active === "register" ? "font-semibold text-xl" : "";
     }
 
     public function login()
