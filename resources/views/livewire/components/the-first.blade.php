@@ -5,7 +5,7 @@
         <p wire:click="changeIntro" class="text-6xl text-gray-50 text-center font-semibold cursor-pointer">
             Mau Pesan Tiket Liburan dengan <span class="text-green-100">{{ $intro }}</span> Yuk Pesan di SurfTicket!
         </p>
-        <button type="button" class="bg-green-700 hover:bg-green-500 py-3 px-10 text-white rounded-lg text-lg mt-10">
+        <button type="button" class="bg-green-700 hover:bg-green-600 py-3 px-10 text-white rounded-lg text-lg mt-10">
             <a href="/home">Cari Tiket</a>
         </button>
     </div>

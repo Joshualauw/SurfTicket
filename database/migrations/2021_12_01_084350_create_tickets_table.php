@@ -18,6 +18,7 @@ class CreateTicketsTable extends Migration
             $table->string("nama");
             $table->text("img_dir");
             $table->string("deskripsi");
+            $table->foreignId("provinsi_id");
             $table->foreignId("kota_id");
             $table->integer("harga");
             $table->timestamps();
