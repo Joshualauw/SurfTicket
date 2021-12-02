@@ -1,5 +1,5 @@
 <div>
-    @if ($layout == "scroll")
+    @if ($layout != "grid")
     <div class="overflow-x-auto overflow-y-hidden w-full h-48 mt-10">
         <div class="whitespace-nowrap h-full inline-flex space-x-6">
             @foreach ($tickets as $ticket)
@@ -15,7 +15,6 @@
                 </span>
             </a>
             @endforeach
-            {{ $tickets->links() }}
         </div>
     </div>
 

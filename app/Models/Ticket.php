@@ -23,4 +23,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(Kota::class);
     }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

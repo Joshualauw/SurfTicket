@@ -41,9 +41,8 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="flex flex-col w-2/5 p-5 space-y-2 h-full">
+    <div class="flex flex-col w-2/5 p-5 space-y-3 h-full">
         <div class="flex">
             <div class="w-1/2">
                 <p class="text-sm">Sisa Tiket:</p>
@@ -53,8 +52,7 @@
             </div>
             <div class="w-1/2">
                 <p class="text-sm">Jadwal Tersedia:</p>
-                <p class="text-lg font-semibold mb-4"><i class="fas fa-calendar-check"></i> {{ $totalJadwal }}
-                </p>
+                <p class="text-lg font-semibold mb-4"><i class="fas fa-calendar-check"></i> {{ $totalJadwal }}</p>
                 <p class="text-sm">Kode Promo:</p>
                 <div class="flex space-x-1 mb-4 text-lg">
                     <input type="text" class="rounded-md bg-gray-300 pl-2 font-semibold w-4/5">
@@ -65,5 +63,4 @@
         <p class="text-xl text-green-700 font-semibold mb-4">Total: Rp. {{ number_format($totalBiaya) }},00</p>
         <button class="py-1 px-6 bg-green-700 rounded-lg text-white text-md hover:opacity-90">Beli</button>
     </div>
-</div>
 </div>

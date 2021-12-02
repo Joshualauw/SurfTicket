@@ -15,7 +15,7 @@
 
 <body class="bg-gray-100">
     @yield('content')
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.5.1/dist/cdn.min.js"></script> --}}
+    <script defer src="https://unpkg.com/alpinejs@3.5.1/dist/cdn.min.js"></script>
     @livewireScripts
 </body>
 
