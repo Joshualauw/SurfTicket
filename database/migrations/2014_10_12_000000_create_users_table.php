@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string("password");
             $table->string("nama");
-            $table->text("img_dir")->default("storage/profile_photo/def.png");
+            $table->text("img_dir")->default("storage/profile_photo/def.jpg");
             $table->string("alamat")->nullable();
             $table->string('email')->unique();
             $table->string("no_telp")->nullable();

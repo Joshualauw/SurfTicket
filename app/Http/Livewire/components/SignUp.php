@@ -34,11 +34,6 @@ class SignUp extends Component
         $this->computedRegister = $active === "register" ? "font-semibold text-xl" : "";
     }
 
-    public function resetInput()
-    {
-        $this->reset("username", "password", "nama", "email", "confirm", "loginPassword", "loginUsername");
-    }
-
     public function login(Request $request)
     {
         $this->validate([
@@ -55,22 +50,9 @@ class SignUp extends Component
         ];
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            session()->flash("flash", [
-                "title" => "Sukses!",
-                "message" => "sukses login",
-                "type" => "success"
-            ]);
-            if (Auth::user()->isAdmin) {
-                return redirect()->to("/admin");
-            }
-            return redirect()->to('/home');
+            $this->emit("loginSuccess", $request);
         } else {
-            session()->flash("flash", [
-                "title" => "Gagal!",
-                "message" => "Gagal Login",
-                "type" => "error"
-            ]);
+            $this->emit("loginFailed");
         }
     }
 
@@ -81,7 +63,7 @@ class SignUp extends Component
             'nama' => 'required',
             'password' => 'required|min:3',
             'confirm' => 'required|same:password',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
         ], [
             'username.required' => ":attribute tidak boleh kosong",
             'username.unique' => ":attribute telah digunakan",
@@ -90,6 +72,7 @@ class SignUp extends Component
             "password:min" => ":attribute minimal 3 karakter",
             "confirm.required" => "konfirmasi tidak boleh kosong",
             "confirm.same" => "Konfirmasi tidak sama dengan password",
+            "email.unique" => ":attribute telah digunakan",
             "email.required" => ":attribute tidak boleh kosong",
             "email.email" => ":attribute format tidak valid"
         ]);
@@ -100,12 +83,8 @@ class SignUp extends Component
             "password" => bcrypt($this->password),
             "email" => $this->email
         ]);
-        $this->resetInput();
-        session()->flash("flash", [
-            "title" => "Sukses!",
-            "message" => "sukses melakukan pendaftaran",
-            "type" => "success"
-        ]);
+        $this->reset("username", "password", "nama", "email", "confirm", "loginPassword", "loginUsername");
+        $this->emitUp("registerSuccess");
     }
 
     public function render()

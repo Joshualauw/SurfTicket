@@ -13,5 +13,9 @@
 
     @include('layouts.footer')
 
+    @if (Session::has("flash"))
+    @livewire('components.the-modal', ["flash" => Session::get('flash')])
+    @endif
+
     @endsection
 </div>

@@ -17,13 +17,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
     @yield('content')
-    @if (Session::has("flash"))
-    @livewire('components.the-modal', ["flash" => Session::get('flash')])
-    @endif
-
-
     <script defer src="https://unpkg.com/alpinejs@3.5.1/dist/cdn.min.js"></script>
     @livewireScripts
 </body>

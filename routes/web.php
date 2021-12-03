@@ -3,6 +3,7 @@
 use App\Http\Controllers\adminCTR;
 use App\Http\Livewire\Pages\Main;
 use App\Http\Livewire\Pages\Home;
+use App\Http\Livewire\Pages\Settings;
 use App\Http\Livewire\Pages\Ticket;
 use App\Http\Livewire\Pages\Tickets;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,10 @@ Route::get('/main', Main::class);
 Route::get("/home", Home::class);
 Route::get("/tickets", Tickets::class);
 Route::get("/ticket/{id}", Ticket::class);
+
+Route::middleware("auth")->group(function () {
+  Route::get('/settings', Settings::class);
+});
 
 Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/admin', [adminCTR::class, 'to_adminHome']);
