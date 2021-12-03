@@ -28,8 +28,8 @@
                 <!-- ============================================================== -->
                 <li>
                     <a class="profile-pic" href="/profileAdmin">
-                        <img src="{{URL::asset('plugins/images/users/varun.jpg')}}" alt="user-img" width="36"
-                            class="img-circle"><span class="text-white font-medium">Admin Melon</span></a>
+                        <img src="{{Auth::user()->img_dir}}" alt="user-img" width="36"
+                            class="img-circle"><span class="text-white font-medium">{{Auth::user()->username}}</span></a>
                 </li>
                 <!-- ============================================================== -->
                 <!-- User profile and search -->

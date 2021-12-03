@@ -8,6 +8,7 @@ use App\Rules\cek_unique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class adminCTR extends Controller
 {
