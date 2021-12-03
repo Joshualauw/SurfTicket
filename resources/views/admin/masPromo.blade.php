@@ -65,13 +65,8 @@
                                             <td>Diskon Launching</td>
                                             <td>25%</td>
                                             <td>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button class="btn btn-warning mx-2 d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
+                                                <button class="btn btn-warning d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
                                                 >Edit</button>
-
-                                                <button class="btn btn-danger mx-2 d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
-                                                >Delete</button>
-                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>

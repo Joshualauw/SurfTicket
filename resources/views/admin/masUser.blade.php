@@ -48,34 +48,14 @@
                     <div class="col-sm-12">
                         <div class="white-box">
                             <h3 class="box-title">Table User</h3>
-
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Nama</th>
-                                            <th class="border-top-0">Username</th>
-                                            <th class="border-top-0">Email</th>
-                                            <th class="border-top-0">Role</th>
-                                            <th class="border-top-0">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Admin Melon</td>
-                                            <td>leMelon</td>
-                                            <td>melon@myadmin.com</td>
-                                            <td>admin</td>
-                                            <td>
-                                                <button
-                                                    class="btn btn-danger d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white">Banned</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="form-group pull-right">
+                                <input type="text" class="search form-control" id="cari_dt"
+                                    placeholder="Cari berdasarkan username">
                             </div>
+                            <div class="table-responsive" id="isi">
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -96,14 +76,20 @@
                 </div>
                 <div class="modal-body p-4 py-5 p-md-5">
                     <h3 class="text-center mb-3">Tambahkan Admin Baru </h3>
-                    <form action="/cek_adminBaru"  enctype="multipart/form-data" method="post" class="signup-form">
+                    <form action="/cek_adminBaru" enctype="multipart/form-data" method="post" class="signup-form">
+                        @csrf
                         <div class="form-group mb-2">
                             <label for="name">Nama</label>
                             <input type="text" class="form-control" name="nm_txt" placeholder="Nama">
                         </div>
                         <div class="form-group mb-2">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="us_txt" placeholder="username">
+                        </div>
+                        <div class="form-group mb-2">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" name="em_txt" placeholder="e-mial">
+                            <input type="text" class="form-control" name="em_txt" placeholder="e-mail"
+                                autocomplete="off">
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Password</label>
@@ -111,19 +97,52 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Konfirmasi Password</label>
-                            <input type="password" class="form-control" name="kf_txt" placeholder="konfirmasi Password">
+                            <input type="password" class="form-control" name="kf_txt"
+                                placeholder="konfirmasi Password">
                         </div>
                         <div class="form-group mb-2">
                             <label>Foto Profile</label>
                             <input type="file" name="ft_txt" class="form-control">
                         </div>
                         <div class="form-group mb-2">
-                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Register</button>
+                            <button type="submit"
+                                class="form-control btn btn-primary rounded submit px-3">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    @if ($errors->any())
+        <script>
+            alert('ada error');
+        </script>
+    @endif
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function loadData() {
+            var key = $("#cari_dt").val();
+            $.ajax({
+                method: "GET",
+                url: "{{ url('/dataUser') }}",
+                data: {
+                    key: key
+                },
+                success: function(res) {
+                    $("#isi").html('');
+                    $("#isi").append(res);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            loadData();
+            $("#cari_dt").change(function() {
+                loadData();
+            })
+        });
+    </script>
 
 </body>

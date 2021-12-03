@@ -24,16 +24,21 @@ Route::get("/home", Home::class);
 Route::get("/tickets", Tickets::class);
 Route::get("/ticket/{id}", Ticket::class);
 
+
 Route::get('/admin', [adminCTR::class, 'to_adminHome']);
-Route::get('/profileAdmin', [adminCTR::class, 'to_profileAdmin']);
+Route::get('/profileAdmin',[adminCTR::class, 'to_profileAdmin']);
 Route::post('/cek_profileAdmin', [adminCTR::class, 'cek_profile']);
 Route::get('/masterUser', [adminCTR::class, 'to_mUser']);
 Route::get('/masterTicket', [adminCTR::class, 'to_mTicket']);
 Route::get('/masterPromo', [adminCTR::class, 'to_mPromo']);
 Route::get('/masterTransaksi', [adminCTR::class, 'to_mTrans']);
-Route::post('/cek_ticketBaru', [adminCTR::class, 'cek_addTicket']);
-Route::post('/cek_changePromo', [adminCTR::class, 'change_promo']);
+Route::post('/cek_ticketBaru',[adminCTR::class, 'cek_addTicket']);
+Route::post('/cek_changePromo',[adminCTR::class, 'change_promo']);
 
 Route::get('/detailTicket/{id}', [adminCTR::class, 'to_dtlTicket']);
 Route::post('/cek_updateTicket', [adminCTR::class, 'cek_uptTicket']);
 Route::post('/cek_changeJadwal', [adminCTR::class, 'change_jadwal']);
+Route::post('/cek_adminBaru', [adminCTR::class, 'add_admin']);
+
+Route::get('/dataUser',[adminCTR::class, 'load_tbuser']);
+
