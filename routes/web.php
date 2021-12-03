@@ -41,4 +41,7 @@ Route::post('/cek_changeJadwal', [adminCTR::class, 'change_jadwal']);
 Route::post('/cek_adminBaru', [adminCTR::class, 'add_admin']);
 
 Route::get('/dataUser',[adminCTR::class, 'load_tbuser']);
-
+Route::get('/banUser', [adminCTR::class, 'ban_user']);
+Route::get('/dataPromo',[adminCTR::class, 'load_tbpromo']);
+Route::get('/cariPromo',[adminCTR::class, 'cari_promo']);
+Route::get('/delPromo',[adminCTR::class, 'hapus_promo']);

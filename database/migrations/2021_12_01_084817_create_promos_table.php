@@ -16,7 +16,7 @@ class CreatePromosTable extends Migration
         Schema::create('promos', function (Blueprint $table) {
             $table->id();
             $table->string("nama");
-            $table->string("kode");
+            $table->string("kode")->unique();
             $table->string("deskripsi");
             $table->text("img_dir")->default("https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1");
             $table->integer("diskon");

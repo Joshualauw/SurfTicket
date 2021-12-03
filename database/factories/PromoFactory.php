@@ -16,7 +16,7 @@ class PromoFactory extends Factory
     {
         return [
             "nama" => $this->faker->name,
-            "kode" => $this->faker->word,
+            "kode" => $this->faker->unique()->word,
             "deskripsi" => $this->faker->text(100),
             "img_dir" => $this->faker->imageUrl(400, 400, "discount", true),
             "diskon" => rand(1, 50)

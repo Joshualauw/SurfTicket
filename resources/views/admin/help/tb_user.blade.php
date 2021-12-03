@@ -27,7 +27,7 @@ foreach ($arr as $a){
                 <?= $ban ?>
                 <td>
                     <button
-                        class="btn btn-danger d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
+                        class="btn btn-danger d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white tombol_ban"
                         value="<?= $a->id ?>">ubah status</button>
                 </td>
 

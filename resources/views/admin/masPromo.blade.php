@@ -33,7 +33,7 @@
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
                             </ol>
-                            <button data-toggle="modal" data-target="#exampleModalCenter"
+                            <button data-toggle="modal" data-target="#exampleModalCenter" id="btn_add_new"
                                 class="btn btn-primary d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
                                 Tambahkan Promo Baru
                             </button>
@@ -47,30 +47,11 @@
                         <div class="white-box">
                             <h3 class="box-title">Table Promo</h3>
                             <div class="form-group pull-right">
-                                <input type="text" class="search form-control" placeholder="Cari Promo">
+                                <input type="text" id="cari_dt" class="search form-control"
+                                    placeholder="Cari berdasarkan kode Promo">
                             </div>
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">Kode Promo</th>
-                                            <th class="border-top-0">Nama Promo</th>
-                                            <th class="border-top-0">Diskon</th>
-                                            <th class="border-top-0">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>SURFTICKETMANTAP</td>
-                                            <td>Diskon Launching</td>
-                                            <td>25%</td>
-                                            <td>
-                                                <button class="btn btn-warning d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white"
-                                                >Edit</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive" id="isi">
+
                             </div>
                         </div>
                     </div>
@@ -92,32 +73,37 @@
                     </button>
                 </div>
                 <div class="modal-body p-4 py-5 p-md-5">
-                    <h3 class="text-center mb-3">Tambahkan Promo Baru </h3>
+                    <h3 class="text-center mb-3" id="judul_modal">Tambahkan Promo Baru </h3>
                     <form action="/cek_changePromo" method="post" enctype="multipart/form-data" class="signup-form">
                         @csrf
                         <div class="form-group mb-2">
                             <label>Kode Promo</label>
-                            <input type="text" class="form-control" name="kd_txt" placeholder="kode promo">
+                            <input type="text" id="kd_txt" class="form-control" name="kd_txt"
+                                placeholder="kode promo">
                         </div>
                         <div class="form-group mb-2">
                             <label>Nama</label>
-                            <input type="text" class="form-control" name="nm_txt" placeholder="nama promo">
+                            <input type="text" id="nm_txt" class="form-control" name="nm_txt"
+                                placeholder="nama promo">
                         </div>
                         <div class="form-group mb-2">
                             <label>Deskripsi</label>
-                            <textarea name="ds_txt" class="form-control" placeholder="deskripsi" rows="3"></textarea>
+                            <textarea name="ds_txt" id="ds_txt" class="form-control" placeholder="deskripsi"
+                                rows="3"></textarea>
                         </div>
                         <div class="form-group mb-2">
                             <label>Presentase Diskon</label>
-                            <input type="number" min="0" name="dk_txt" class="form-control"
+                            <input type="number" min="0" id="dk_txt" name="dk_txt" class="form-control"
                                 placeholder="diskon">
                         </div>
-                        <div class="form-group mb-2">
+                        <div class="form-group mb-2" id="banner_promo">
                             <label>Banner Promo</label>
                             <input type="file" name="gb_txt" class="form-control">
                         </div>
                         <div class="form-group mb-2">
-                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">add promo</button>
+                            <button type="submit" name="btn_chg"
+                                class="form-control btn btn-primary rounded submit px-3" value="add"
+                                id="btn_sub_Promo">add promo</button>
                         </div>
                     </form>
                 </div>
@@ -125,5 +111,92 @@
         </div>
     </div>
 
+    @if ($errors->any())
+        <script>
+            alert('validation error');
+        </script>
+    @endif
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function loadData() {
+            var key = $("#cari_dt").val();
+            $.ajax({
+                method: "GET",
+                url: "{{ url('/dataPromo') }}",
+                data: {
+                    key: key
+                },
+                success: function(res) {
+                    $("#isi").html('');
+                    $("#isi").append(res);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            loadData();
+            $("#cari_dt").change(function() {
+                loadData();
+            });
+
+            $("#isi").on('click', '.tombol_edit', function() {
+                var vl = $(this).val();
+                console.log(vl);
+
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/cariPromo') }}",
+                    data: {
+                        id_promo: vl
+                    },
+                    success: function(res) {
+                        $("#kd_txt").val(res["kode"]);
+                        $("#kd_txt").prop("disabled", true);
+                        $("#nm_txt").val(res["nama"]);
+                        $("#ds_txt").val(res["deskripsi"]);
+                        $("#dk_txt").val(res["diskon"]);
+                    }
+                });
+
+                $("#banner_promo").hide();
+                $("#judul_modal").html("Edit Promo");
+                $("#btn_sub_Promo").html("Edit");
+                $("#btn_sub_Promo").val(vl);
+            });
+
+            $("#btn_add_new").click(function() {
+                $("#banner_promo").show();
+                $("#judul_modal").html("Tambahkan Promo baru");
+                $("#btn_sub_Promo").html("Add Promo");
+                $("#btn_sub_Promo").val('add');
+
+                $("#kd_txt").prop("disabled", false);
+                $("#kd_txt").val("");
+                $("#nm_txt").val("");
+                $("#ds_txt").val("");
+                $("#dk_txt").val("");
+            });
+
+
+            $("#isi").on('click', '.tombol_delete', function() {
+                var vl = $(this).val();
+                console.log(vl);
+
+                if (confirm('konfirmasi delete promo')) {
+                    $.ajax({
+                        method: "GET",
+                        url: "{{ url('/delPromo') }}",
+                        data: {
+                            id_promo: vl
+                        },
+                        success: function(res) {
+                            loadData();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>

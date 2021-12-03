@@ -141,6 +141,21 @@
             loadData();
             $("#cari_dt").change(function() {
                 loadData();
+            });
+
+            $("#isi").on('click', '.tombol_ban', function() {
+                var vl = $(this).attr('value');
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/banUser') }}",
+                    data: {
+                        id_user: vl
+                    },
+                    success: function(res) {
+                        loadData();
+                        //alert('berhasil ubah status');
+                    }
+                });
             })
         });
     </script>

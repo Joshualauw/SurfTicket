@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Promo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Rules\cek_unique;
@@ -36,7 +37,15 @@ class adminCTR extends Controller
         return view('admin/masTicket');
     }
 
-    function to_mPromo(){
+    function to_mPromo(Request $request){
+
+        $berhasil = $request->session()->pull('berhasil');
+        if ($berhasil == "edit") {
+            echo "<script>alert('berhasil edit promo')</script>";
+        }
+        elseif($berhasil == "tambah"){
+            echo "<script>alert('berhasil menambah promo')</script>";
+        }
         return view('admin/masPromo');
     }
 
@@ -49,7 +58,52 @@ class adminCTR extends Controller
     }
 
     function change_promo(Request $request){
-        return response()->json($request);
+
+        if($request->btn_chg == "add"){
+            $rul = [
+                "kd_txt" =>["required",new cek_unique(Promo::all(),'kode',$request->kd_txt)],
+                "nm_txt" =>["required"],
+                "ds_txt" => ["required"],
+                "dk_txt" => ["required","min:0"]
+            ];
+            $this->validate($request, $rul);
+            if($request->hasFile('gb_txt')){
+                Storage::putFileAs('/public/banner_promo',$request->file('gb_txt'),$request->kd_txt.".".$request->file('gb_txt')->getClientOriginalExtension());
+                $filnam = '/public/banner_promo/'.$request->kd_txt.".".$request->file('gb_txt')->getClientOriginalExtension();
+            }
+            else{
+                $filnam = '/public/banner_promo/def.jpg';
+            }
+
+            $n = new Promo();
+            $n->nama = $request->nm_txt;
+            $n->kode = $request->kd_txt;
+            $n->deskripsi = $request->ds_txt;
+            $n->diskon = $request->dk_txt;
+            $n->img_dir = $filnam;
+
+            $n->save();
+
+            return redirect()->action([adminCTR::class, 'to_mPromo'])->with('berhasil', 'tambah');
+        }
+        else{
+            $rul = [
+                "nm_txt" =>["required"],
+                "ds_txt" => ["required"],
+                "dk_txt" => ["required","min:0"]
+            ];
+            $this->validate($request, $rul);
+
+            $pr = Promo::find($request->btn_chg);
+            $pr->nama = $request->nm_txt;
+            $pr->deskripsi = $request->ds_txt;
+            $pr->diskon = $request->dk_txt;
+            $pr->save();
+
+            return redirect()->action([adminCTR::class, 'to_mPromo'])->with('berhasil', 'edit');
+        }
+
+
     }
 
     function to_dtlTicket(Request $request){
@@ -99,6 +153,17 @@ class adminCTR extends Controller
         return redirect()->action([adminCTR::class, 'to_mUser'])->with('berhasil', 'ya');
     }
 
+    function ban_user(Request $request){
+        $usr = User::find($request->id_user);
+        if($usr->isBan == 0){
+            $usr->isBan = 1;
+        }
+        else{
+            $usr->isBan = 0;
+        }
+        $usr->save();
+    }
+
     function load_tbuser(Request $request){
         if($request->key == ""){
             $arr = User::all();
@@ -109,5 +174,26 @@ class adminCTR extends Controller
         }
 
         return view('/admin/help/tb_user', ["arr" => $arr])->render();
+    }
+
+    function load_tbpromo(Request $request){
+        if($request->key == ""){
+            $arr = Promo::all();
+        }
+        else{
+            $key = $request->key;
+            $arr = User::where("kode", 'like', '%' . $key . '%')->get();
+        }
+
+        return view('/admin/help/tb_promo', ["arr" => $arr])->render();
+    }
+
+    function cari_promo(Request $request){
+        $arr = Promo::find($request->id_promo);
+        return response()->json($arr);
+    }
+
+    function hapus_promo(Request $request){
+        Promo::destroy($request->id_promo);
     }
 }
