@@ -18,7 +18,7 @@ class PromoFactory extends Factory
             "nama" => $this->faker->name,
             "kode" => $this->faker->unique()->word,
             "deskripsi" => $this->faker->text(100),
-            "img_dir" => $this->faker->imageUrl(400, 400, "discount", true),
+            "img_dir" => 'storage/banner_promo/def.jpg',
             "diskon" => rand(1, 50)
         ];
     }

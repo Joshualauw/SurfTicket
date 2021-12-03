@@ -9,7 +9,7 @@
         <div class="flex flex-col justify-center items-center w-1/2">
             @foreach ($reviews as $review)
             <div class="flex justify-between items-center space-x-3 pb-5 border-b-2 border-gray-300">
-                <img src="{{ $review->user->img_dir }}" class="w-16 h-16 rounded-full" alt="">
+                <img src="{{asset($review->user->img_dir)}}" class="w-16 h-16 rounded-full" alt="">
                 <div class="flex flex-col justify-center items-start space-y-2">
                     <p class="text-sm font-semibold">{{ $review->user->nama }}</p>
                     <div class="flex">

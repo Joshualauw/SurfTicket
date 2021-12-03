@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             "nama" => "Owner",
             "password" => bcrypt('admin'),
             "email" => "owner@gmail.com",
-            'isAdmin' => true
+            'isAdmin' => true,
+            'img_dir' => "storage/profile_photo/min.jpg"
         ]);
         User::factory()->count(15)->create();
     }

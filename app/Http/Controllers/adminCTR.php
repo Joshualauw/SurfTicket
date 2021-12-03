@@ -78,9 +78,9 @@ class adminCTR extends Controller
             $this->validate($request, $rul);
             if ($request->hasFile('gb_txt')) {
                 Storage::putFileAs('/public/banner_promo', $request->file('gb_txt'), $request->kd_txt . "." . $request->file('gb_txt')->getClientOriginalExtension());
-                $filnam = '/public/banner_promo/' . $request->kd_txt . "." . $request->file('gb_txt')->getClientOriginalExtension();
+                $filnam = 'storage/banner_promo/' . $request->kd_txt . "." . $request->file('gb_txt')->getClientOriginalExtension();
             } else {
-                $filnam = '/public/banner_promo/def.jpg';
+                $filnam = 'storage/banner_promo/def.jpg';
             }
 
             $n = new Promo();
@@ -140,9 +140,11 @@ class adminCTR extends Controller
 
         if ($request->hasFile('ft_txt')) {
             Storage::putFileAs('/public/profile_photo', $request->file('ft_txt'), $request->us_txt . "." . $request->file('ft_txt')->getClientOriginalExtension());
-            $filnam = '/public/profile_photo/' . $request->us_txt . "." . $request->file('ft_txt')->getClientOriginalExtension();
+            $filnam = 'storage/profile_photo/' . $request->us_txt . "." . $request->file('ft_txt')->getClientOriginalExtension();
+
+            return $filnam;
         } else {
-            $filnam = '/public/profile_photo/def.png';
+            $filnam = 'storage/profile_photo/def.png';
         }
 
         try {

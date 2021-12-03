@@ -21,7 +21,7 @@ class UserFactory extends Factory
             'password' => bcrypt($this->faker->word()), // password
             'alamat' => $this->faker->title(),
             'no_telp' => $this->faker->phoneNumber(),
-            "img_dir" => '/public/profile_photo/def.png',
+            "img_dir" => 'storage/profile_photo/def.jpg',
             'tanggal_lahir' => $this->faker->date(),
             'isAdmin' => false
         ];

@@ -18,7 +18,7 @@ class CreatePromosTable extends Migration
             $table->string("nama");
             $table->string("kode")->unique();
             $table->string("deskripsi");
-            $table->text("img_dir")->default("https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1");
+            $table->text("img_dir")->default("storage/banner_promo/def.jpg");
             $table->integer("diskon");
             $table->timestamps();
         });
