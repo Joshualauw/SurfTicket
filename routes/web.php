@@ -47,4 +47,8 @@ Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/cariPromo', [adminCTR::class, 'cari_promo']);
   Route::get('/delPromo', [adminCTR::class, 'hapus_promo']);
   Route::post("/logout", [adminCTR::class, 'logout']);
+
+  Route::get('/dataKota', [adminCTR::class, 'load_kota']);
+  Route::get('/dataTicket', [adminCTR::class, 'load_ticket']);
+  Route::get('/deleteTicket/{id}', [adminCTR::class, 'to_delTicket']);
 });

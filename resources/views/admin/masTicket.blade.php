@@ -1,3 +1,7 @@
+<?php
+$pro = \App\Models\Provinsi::all();
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -16,7 +20,98 @@
     <script src="js/main.js"></script>
 
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+    <script>
+        function loadData() {
+            var srch = $('#in_cari_tik').val();
+            var pro = $('#sel_pro').val();
+            var kot = $('#sel_kot').val();
+            $.ajax({
+                method: "GET",
+                url: "{{ url('/dataTicket') }}",
+                data: {
+                    sch: srch,
+                    pro: pro,
+                    kot: kot
+                },
+                success: function(res) {
+                    $("#isi").html('');
+                    $("#isi").append(res);
+                }
+            });
+
+
+            $('#in_cari_tik').val("");
+        }
+
+        function initKota() {
+            $.ajax({
+                method: "GET",
+                url: "{{ url('/dataKota') }}",
+                data: {
+                    id_pro: 11
+                },
+                success: function(res) {
+                    $("#sel_kot2").html('');
+                    $("#sel_kot2").append(res);
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+            loadData();
+            initKota();
+            $('.js-example-basic-single').select2();
+            $('#sel_pro').change(function() {
+                var val = $('#sel_pro').val();
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/dataKota') }}",
+                    data: {
+                        id_pro: val
+                    },
+                    success: function(res) {
+                        $("#sel_kot").html('');
+                        $("#sel_kot").append('<option value="no">All</option>');
+                        $("#sel_kot").append(res);
+                    }
+                });
+                $("#sel_kot").val("no");
+                loadData();
+            });
+
+            $('#sel_pro2').change(function() {
+                var val = $('#sel_pro2').val();
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/dataKota') }}",
+                    data: {
+                        id_pro: val
+                    },
+                    success: function(res) {
+                        $("#sel_kot2").html('');
+                        $("#sel_kot2").append(res);
+                    }
+                });
+            });
+
+            $('#sel_kot').change(function() {
+                loadData();
+            })
+
+            $('#in_cari_tik').change(function() {
+                loadData();
+            })
+        });
+    </script>
 </head>
 
 <body>
@@ -31,10 +126,32 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Master Ticket</h4>
+
+
                     </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        Provinsi
+                        <select class="js-example-basic-single form-control" name="" id="sel_pro">
+                            <option value="no">All</option>
+                            @foreach ($pro as $item)
+                                <option value="<?= $item->id ?>"><?= $item->nama ?></option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        Kabupaten/Kota
+                        <select class="js-example-basic-single form-control" name="" id="sel_kot">
+                            <option value="no">All</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-4 col-md-4 col-xs-12">
+
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
+
                             </ol>
                             <button data-toggle="modal" data-target="#exampleModalCenter"
                                 class="btn btn-primary d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
@@ -47,63 +164,8 @@
             <div class="container-fluid">
                 <section class="py-1">
                     <div class="container px-4 px-lg-5 mt-5">
-                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <img class="card-img-top"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Jogja_Bay_Logo.png"
-                                        alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Ticket Bali Zoo</h5>
-                                            <!-- Product price-->
-                                            Rp. 125.000 <br>
-                                            Kuota : 32/50
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center">
-                                            <a class="btn btn-outline-dark mt-auto" href="/detailTicket/TK001">View
-                                                Detail</a>
-                                            <a class="btn btn-outline-danger mt-auto"
-                                                href="/deleteTicket/TK001">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col mb-5">
-                                <div class="card h-100">
-
-                                    <img class="card-img-top"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Jogja_Bay_Logo.png"
-                                        alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Jogja Bay</h5>
-                                            Rp. 150.000
-                                            <br>
-                                            Kuota : 30/150
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center">
-                                            <a class="btn btn-outline-dark mt-auto" href="/detailTicket/TK002">View
-                                                Detail</a>
-                                            <a class="btn btn-outline-danger mt-auto"
-                                                href="/deleteTicket/TK002">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+                            id="isi">
                         </div>
                     </div>
                 </section>
@@ -144,25 +206,17 @@
                             <input type="file" name="gb_txt" class="form-control">
                         </div>
                         <div class="form-group mb-2">
-                            <label>Kuota</label>
-                            <input type="number" min="0" name="ku_txt" class="form-control"
-                                placeholder="Kuota Ticket">
+                            <label>Provinsi</label> <br>
+                            <select class=" custom-select form-control " name="pr_txt" id="sel_pro2">
+                                @foreach ($pro as $item)
+                                    <option value="<?= $item->id ?>"><?= $item->nama ?></option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mb-2">
-                            <label>Tempat</label> <br>
-                            <select class="custom-select form-control" name="tp_txt">
-                                <optgroup label="Bali">
-                                    <option value="vp1+vk1">Ginayar</option>
-                                    <option value="vp1+vk2">Denpasar</option>
-                                    <option value="vp1+vk3">Gilimanuk</option>
-                                </optgroup>
-
-                                <optgroup label="Jawa Timur">
-                                  <option value="vp2+vk1">Surabaya</option>
-                                  <option value="vp2+vk2">Malang</option>
-                                  <option value="vp2+vk3">Blitar</option>
-                                </optgroup>
-                              </select>
+                            <label>Kabupaten/kota</label> <br>
+                            <select class="custom-select form-control" name="kt_txt" id="sel_kot2">
+                            </select>
                         </div>
                         <div class="form-group mb-2">
                             <button type="submit" class="form-control btn btn-primary rounded submit px-3">Add</button>
@@ -190,4 +244,10 @@
             }
         }
     </script>
+
+    @if ($errors->any())
+        <script>
+            alert('validation error');
+        </script>
+    @endif
 </body>
