@@ -182,7 +182,7 @@ class adminCTR extends Controller
         }
         else{
             $key = $request->key;
-            $arr = User::where("kode", 'like', '%' . $key . '%')->get();
+            $arr = Promo::where("kode", 'like', '%' . $key . '%')->get();
         }
 
         return view('/admin/help/tb_promo', ["arr" => $arr])->render();
