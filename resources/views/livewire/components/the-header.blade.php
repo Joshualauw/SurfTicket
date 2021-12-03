@@ -4,11 +4,12 @@
         <li><a href="/home" class="hover:border-b-2 hover:border-green-200 pb-1">Home</a></li>
         <li><a href="/tickets" class="hover:border-b-2 hover:border-green-200 pb-1">Tickets</a></li>
         <li><a href="/" class="hover:border-b-2 hover:border-green-200 pb-1">About</a></li>
+        @auth
         <li>
             <img class="w-9 h-9 rounded-full relative cursor-pointer" wire:click='toogleDropdown' wire:model='isOpen'
                 src="https://kerma.widyatama.ac.id/wp-content/uploads/2021/05/blank-profile-picture-973460_1280.png">
             @if ($isOpen)
-            <div class="origin-top-right absolute right-20 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            <div class="origin-top-right absolute right-20 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                 <div class="py-1" role="none">
                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -20,12 +21,13 @@
                         tabindex="-1" id="menu-item-2">History</a>
                     <button
                         class="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200 border-t-2 border-gray-200"
-                        role="menuitem" tabindex="-1">
+                        role="menuitem" tabindex="-1" wire:click='signOut'>
                         Sign out
                     </button>
                 </div>
             </div>
             @endif
         </li>
+        @endauth
     </ul>
 </div>
