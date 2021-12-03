@@ -36,13 +36,7 @@ class SignUp extends Component
 
     public function resetInput()
     {
-        $this->username = "";
-        $this->password = "";
-        $this->nama = "";
-        $this->email = "";
-        $this->confirm = "";
-        $this->loginPassword = "";
-        $this->loginUsername = "";
+        $this->reset("username", "password", "nama", "email", "confirm", "loginPassword", "loginUsername");
     }
 
     public function login(Request $request)
@@ -57,7 +51,7 @@ class SignUp extends Component
 
         $credentials = [
             "username" => $this->loginUsername,
-            "password" => $this->loginPassword
+            "password" => $this->loginPassword,
         ];
 
         if (Auth::attempt($credentials)) {
@@ -67,19 +61,22 @@ class SignUp extends Component
                 "message" => "sukses login",
                 "type" => "success"
             ]);
-            return redirect("/home");
+            if (Auth::user()->isAdmin) {
+                return redirect()->to("/admin");
+            }
+            return redirect()->to('/home');
+        } else {
+            session()->flash("flash", [
+                "title" => "Gagal!",
+                "message" => "Gagal Login",
+                "type" => "error"
+            ]);
         }
-
-        session()->flash("flash", [
-            "title" => "Gagal!",
-            "message" => "Gagal Login",
-            "type" => "error"
-        ]);
     }
 
     public function register()
     {
-        $validated_data = $this->validate([
+        $this->validate([
             "username" => 'required|unique:users|min:3',
             'nama' => 'required',
             'password' => 'required|min:3',

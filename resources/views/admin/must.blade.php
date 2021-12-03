@@ -4,7 +4,8 @@
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5" style="background-color: #059669;">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5"
+            style="background-color: #059669;">
 
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -43,7 +44,7 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" data-sidebarbg="skin6" >
+<aside class="left-sidebar" data-sidebarbg="skin6">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
@@ -51,8 +52,7 @@
             <ul id="sidebarnav">
                 <!-- User Profile-->
                 <li class="sidebar-item pt-2">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin"
-                        aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin" aria-expanded="false">
                         <i class="far fa-clock" aria-hidden="true"></i>
                         <span class="hide-menu">Dashboard</span>
                     </a>
@@ -93,16 +93,16 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false">
                         <i class="far fa-file-alt" aria-hidden="true"></i>
                         <span class="hide-menu">Report</span>
                     </a>
                 </li>
                 <li class="text-center p-20 upgrade-btn">
-                    <a href="/"
-                        class="btn d-grid btn-danger text-white">
-                        Logout</a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="btn d-grid btn-danger text-white">Logout</button>
+                    </form>
                 </li>
             </ul>
 
