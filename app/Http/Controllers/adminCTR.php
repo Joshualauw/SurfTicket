@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HTransaksi;
 use App\Models\Jadwal;
 use App\Models\Kota;
 use App\Models\User;
 use App\Models\Promo;
 use App\Models\Ticket;
+use App\Models\Transaksi;
 use App\Rules\cek_unique;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 
@@ -18,7 +22,14 @@ class adminCTR extends Controller
     //
     function to_adminHome()
     {
+// //         SELECT    COUNT(*)
+// // FROM      table_emp
+// // WHERE     YEAR(ARR_DATE) = '2012'
+// // GROUP BY  MONTH(ARR_DATE)
 
+//         $arr = HTransaksi::where([date_format('created_at','Y'),"=",Carbon::now()->year],[Carbon::parse('created_at')->month,"=",12])->count();
+
+//         return response()->json($arr);
         return view('admin/homeAdmin');
     }
 
@@ -118,7 +129,8 @@ class adminCTR extends Controller
 
     function to_mTrans()
     {
-        return view('admin/masTrans');
+
+        return view('admin/masTrans',["arr"=>HTransaksi::where("status","=","menunggu")->get()]);
     }
 
     function cek_addTicket(Request $request)
