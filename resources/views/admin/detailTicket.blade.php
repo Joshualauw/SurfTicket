@@ -117,27 +117,27 @@ $pro = \App\Models\Provinsi::all();
                 $("#ahkir_txt").val('');
                 $("#kt_txt").val('');
                 $("#action").val("add");
-                $("#btn_id").val({{$tkt->id}});
+                $("#btn_id").val({{ $tkt->id }});
                 $("#judul_modal").html("Tambahkan Jadwal Baru");
                 $("#btn_id").html("add jadwal");
             });
 
             $("#isi").on('click', '.tombol_delete', function() {
-            var vl = $(this).val();
+                var vl = $(this).val();
 
-            if (confirm('konfirmasi delete jadwal')) {
-                $.ajax({
-                    method: "GET",
-                    url: "{{ url('/delJadwal') }}",
-                    data: {
-                        id_jadwal: vl
-                    },
-                    success: function(res) {
-                        loadData();
-                    }
-                });
-            }
-        });
+                if (confirm('konfirmasi delete jadwal')) {
+                    $.ajax({
+                        method: "GET",
+                        url: "{{ url('/delJadwal') }}",
+                        data: {
+                            id_jadwal: vl
+                        },
+                        success: function(res) {
+                            loadData();
+                        }
+                    });
+                }
+            });
         })
     </script>
 
@@ -284,6 +284,60 @@ $pro = \App\Models\Provinsi::all();
                             <div class="table-responsive" id="isi">
 
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--SECTION 3 -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Review</h3>
+
+                            <?php
+                                $avg = \App\Models\Review::where('ticket_id', '=', $tkt->id)->avg('rating');
+                                if($avg > 0){
+                                    ?>
+                            <div class="comment-widgets">
+                                <?php
+                                            foreach(\App\Models\Review::where('ticket_id', '=', $tkt->id)->get() as $k){
+                                                $diz = \App\Models\User::find($k->user_id)->img_dir;
+                                                ?>
+                                <div class="d-flex flex-row comment-row p-3 mt-0">
+                                    <div class="p-2"><img src="{{ URL::asset($diz) }}" alt="user"
+                                            width="50" class="rounded-circle"></div>
+                                    <div class="comment-text ps-2 ps-md-3 w-100">
+                                        <div class="comment-footer d-md-flex align-items-center">
+                                            <span class="badge">
+                                                <?php
+                                                for ($i = 0; $i < 5; $i++) {
+                                                    if ($i < $k->rating) {
+                                                        echo "<i class='fas fa-star text-warning'></i>";
+                                                    } else {
+                                                        echo "<i class='fas fa-star text-secondary'></i>";
+                                                    }
+                                                }
+
+                                                ?>
+                                            </span>
+                                            <div class="text-muted fs-2 ms-auto mt-2 mt-md-0"><?=date_format($k->created_at,"F d, Y");?></div>
+                                        </div>
+                                        <h5 class="font-medium"><?=\App\Models\User::find($k->user_id)->nama?></h5>
+                                        <span class="mb-3 d-block"><?=$k->comment?></span>
+                                    </div>
+                                </div>
+                                <?php
+                                            }
+                                        ?>
+                            </div>
+                            <?php
+                                }
+                                else{
+                                    echo "belum ada ulasan";
+                                }
+                            ?>
 
                         </div>
                     </div>

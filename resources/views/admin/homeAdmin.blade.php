@@ -1,29 +1,43 @@
+<?php
+$pro = \App\Models\Provinsi::all();
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Ample lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Ample admin lite dashboard bootstrap 5 dashboard template">
-    <meta name="description"
-        content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Admin Dashboard</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
-    <!-- Favicon icon -->
+    <title>Dashboard</title>
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <!-- Custom CSS -->
-    <link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
-    <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 
 </head>
 
 <body>
+
+
+
+
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <!-- ============================================================== -->
@@ -61,7 +75,9 @@
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ms-auto"><span class="counter text-success">659</span></li>
+                                <li class="ms-auto"><span class="counter text-success">
+                                        <?= \App\Models\User::count() ?>
+                                    </span></li>
                             </ul>
                         </div>
                     </div>
@@ -74,7 +90,8 @@
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ms-auto"><span class="counter text-purple">869</span></li>
+                                <li class="ms-auto"><span
+                                        class="counter text-purple"><?= \App\Models\Ticket::count() ?></span></li>
                             </ul>
                         </div>
                     </div>
@@ -87,7 +104,8 @@
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ms-auto"><span class="counter text-info">911</span>
+                                <li class="ms-auto"><span
+                                        class="counter text-info"><?= \App\Models\HTransaksi::count() ?></span>
                                 </li>
                             </ul>
                         </div>
@@ -99,7 +117,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div class="white-box">
-                            <h3 class="box-title">Grafik Penjualan Ticket</h3>
+                            <h3 class="box-title">Grafik Penjualan Ticket <?= \Carbon\Carbon::now()->year ?></h3>
                             <canvas id="chart_pj">
 
                             </canvas>
@@ -115,12 +133,11 @@
                             <div class="d-md-flex mb-3">
                                 <h3 class="box-title mb-0">Top penjualan ticket</h3>
                                 <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-                                    <select class="form-select shadow-none row border-top">
-                                        <option>Bali</option>
-                                        <option>Jawa Timur</option>
-                                        <option>Jawa Tengah</option>
-                                        <option>Jawa Barat</option>
-                                        <option>Jakarta</option>
+                                    <select class="form-control shadow-none row border-top js-example-basic-single">
+                                        <option value="all">All</option>
+                                        @foreach ($pro as $item)
+                                            <option value="<?= $item->id ?>"><?= $item->nama ?></option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -158,42 +175,61 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
-        function initChart(){
+        function initChart() {
             var ambil = [];
             var tgl = [];
 
-            ambil.push(70);
-            tgl.push("Juni");
+            ambil.push(12);
+            tgl.push("Januari");
 
             ambil.push(85);
-            tgl.push("Juli");
+            tgl.push("Febuari");
 
             ambil.push(100);
-            tgl.push("Agustus");
+            tgl.push("Maret");
 
             ambil.push(150);
-            tgl.push("September");
+            tgl.push("April");
 
             ambil.push(95);
+            tgl.push("Mei");
+
+            ambil.push(120);
+            tgl.push("Juni");
+
+            ambil.push(120);
+            tgl.push("Juli");
+
+            ambil.push(120);
+            tgl.push("Agustus");
+
+            ambil.push(120);
+            tgl.push("September");
+
+            ambil.push(120);
             tgl.push("Oktober");
 
             ambil.push(120);
             tgl.push("November");
 
+            ambil.push(120);
+            tgl.push("Desember");
 
 
-            var datax={
+
+            var datax = {
                 labels: tgl,
                 datasets: [{
-                 label: "Penjualan Ticket",
-                 data: ambil,
+                    label: "Penjualan Ticket",
+                    data: ambil,
                 }]
             };
 
-            var ctxOption={
+            var ctxOption = {
                 legend: {
                     display: true,
                     position: 'top',
@@ -205,14 +241,14 @@
             };
 
             var ctx = document.getElementById('chart_pj');
-            var line_ctx = new Chart(ctx,{
+            var line_ctx = new Chart(ctx, {
                 type: 'line',
                 data: datax,
                 options: ctxOption
             });
         };
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             initChart();
         });
     </script>
