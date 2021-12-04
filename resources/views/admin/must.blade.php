@@ -28,7 +28,7 @@
                 <!-- ============================================================== -->
                 <li>
                     <a class="profile-pic" href="/profileAdmin">
-                        <img src="{{Auth::user()->img_dir}}" alt="user-img" width="36"
+                        <img src="{{URL::asset(Auth::user()->img_dir)}}" alt="user-img" width="36"
                             class="img-circle"><span class="text-white font-medium">{{Auth::user()->username}}</span></a>
                 </li>
                 <!-- ============================================================== -->

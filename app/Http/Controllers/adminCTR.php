@@ -21,14 +21,62 @@ class adminCTR extends Controller
         return view('admin/homeAdmin');
     }
 
-    function to_profileAdmin()
+    function to_profileAdmin(Request $request)
     {
+        $berhasil = $request->session()->pull('berhasil');
+        if ($berhasil == "ya") {
+            echo "<script>alert('berhasil update profile')</script>";
+        }
+
         return view('admin/profile');
     }
 
     function cek_profile(Request $request)
     {
-        return response()->json($request);
+        $n = User::find($request->btn_id);
+
+        $ctr = 0;
+        if (($request->nama_txt != "" || $request->nama_txt != null) && $request->nama_txt != $n->nama) {
+            $n->nama = $request->nama_txt;
+            $ctr += 1;
+        }
+
+        if (($request->user_txt != "" || $request->user_txt != null) && $request->user_txt != $n->username) {
+            if (count(User::where("username", "=", $request->user_txt)->get()) == 0) {
+                $n->username = $request->user_txt;
+                $ctr += 1;
+            }
+        }
+
+        if (($request->email_txt != "" || $request->email_txt != null) && $request->email_txt != $n->email) {
+            if (count(User::where("email", "=", $request->email_txt)->get()) == 0) {
+                $n->email = $request->email_txt;
+                $ctr += 1;
+            }
+        }
+
+        if (($request->tlp_txt != "" || $request->tlp_txt != null) && $request->tlp_txt != $n->no_telp) {
+            $n->no_telp = $request->tlp_txt;
+            $ctr += 1;
+        }
+
+        if (($request->alt_txt != "" || $request->alt_txt != null) && $request->alt_txt != $n->alamat) {
+            $n->alamat = $request->alt_txt;
+            $ctr += 1;
+        }
+
+        if (($request->tgl_txt != "" || $request->tgl_txt != null) && $request->tgl_txt != $n->tgl_lahir) {
+            $n->tgl_lahir = $request->tgl_txt;
+            $ctr += 1;
+        }
+
+
+        if ($ctr == 0) {
+            return redirect()->action([adminCTR::class, 'to_profileAdmin']);
+        } else {
+            $n->save();
+            return redirect()->action([adminCTR::class, 'to_profileAdmin'])->with('berhasil', 'ya');
+        }
     }
 
     function to_mUser(Request $request)
@@ -47,8 +95,7 @@ class adminCTR extends Controller
         $berhasil = $request->session()->pull('berhasil');
         if ($berhasil == "ya") {
             echo "<script>alert('berhasil add ticket baru')</script>";
-        }
-        else if($berhasil == "hapus"){
+        } else if ($berhasil == "hapus") {
             echo "<script>alert('berhasil hapus ticket')</script>";
         }
         return view('admin/masTicket');
@@ -152,12 +199,52 @@ class adminCTR extends Controller
 
     function to_dtlTicket(Request $request)
     {
-        return view('admin/detailTicket');
+        $tkt = Ticket::find($request->id);
+
+        $berhasil = $request->session()->pull('berhasil');
+        if ($berhasil == "ya") {
+            echo "<script>alert('berhasil edit ticket')</script>";
+        }
+
+        return view('admin/detailTicket', ["tkt" => $tkt]);
     }
 
     function cek_uptTicket(Request $request)
     {
-        return response()->json($request);
+        $n = Ticket::find($request->btn_id);
+
+        $ctr = 0;
+        if (($request->nama_txt != "" || $request->nama_txt != null) && $request->nama_txt != $n->nama) {
+            $n->nama = $request->nama_txt;
+            $ctr += 1;
+        }
+
+        if (($request->des_txt != "" || $request->des_txt != null) && $request->des_txt != $n->deskripsi) {
+            $n->deskripsi = $request->des_txt;
+            $ctr += 1;
+        }
+
+        if (($request->pr_txt != "" || $request->pr_txt != null) && $request->pr_txt != $n->provinsi_id) {
+            $n->provinsi_id = $request->pr_txt;
+            $ctr += 1;
+        }
+
+        if (($request->kt_txt != "" || $request->kt_txt != null) && $request->kt_txt != $n->kota_id) {
+            $n->kota_id = $request->kt_txt;
+            $ctr += 1;
+        }
+
+        if (($request->hr_txt != "" || $request->hr_txt != null) && $request->hr_txt != $n->harga) {
+            $n->harga = $request->hr_txt;
+            $ctr += 1;
+        }
+
+        if ($ctr == 0) {
+            return redirect()->back();
+        } else {
+            $n->save();
+            return redirect()->back()->with('berhasil', 'ya');
+        }
     }
 
     function change_jadwal(Request $request)
@@ -180,8 +267,6 @@ class adminCTR extends Controller
         if ($request->hasFile('ft_txt')) {
             Storage::putFileAs('/public/profile_photo', $request->file('ft_txt'), $request->us_txt . "." . $request->file('ft_txt')->getClientOriginalExtension());
             $filnam = 'storage/profile_photo/' . $request->us_txt . "." . $request->file('ft_txt')->getClientOriginalExtension();
-
-            return $filnam;
         } else {
             $filnam = 'storage/profile_photo/def.png';
         }
@@ -256,46 +341,47 @@ class adminCTR extends Controller
         return redirect('/');
     }
 
-    function load_kota(Request $request){
-        $arr = Kota::where('provinsi_id','=',$request->id_pro)->get();
+    function load_kota(Request $request)
+    {
+        $arr = Kota::where('provinsi_id', '=', $request->id_pro)->get();
+        if ($request->id_kot != null) {
+            return view('/admin/help/opt_kota', ["arr" => $arr, "spc" => $request->id_kot])->render();
+        }
         return view('/admin/help/opt_kota', ["arr" => $arr])->render();
     }
 
-    function load_ticket(Request $request){
+    function load_ticket(Request $request)
+    {
         $sc = $request->sch;
         $pr = $request->pro;
         $kt = $request->kot;
 
-        if($sc == "" || $sc == null){
-            if($pr == "no" || $pr == null){
+        if ($sc == "" || $sc == null) {
+            if ($pr == "no" || $pr == null) {
                 $arr = Ticket::all();
-            }
-            else{
-                if($kt == "no" || $kt == null){
-                    $arr = Ticket::where('provinsi_id','=',$pr)->get();
-                }
-                else{
-                    $arr = Ticket::where([['provinsi_id','=',$pr],['kota_id','=',$kt]])->get();
+            } else {
+                if ($kt == "no" || $kt == null) {
+                    $arr = Ticket::where('provinsi_id', '=', $pr)->get();
+                } else {
+                    $arr = Ticket::where([['provinsi_id', '=', $pr], ['kota_id', '=', $kt]])->get();
                 }
             }
-        }
-        else{
-            if($pr == "no"  || $pr == null){
+        } else {
+            if ($pr == "no"  || $pr == null) {
                 $arr = Ticket::where("nama", 'like', '%' . $sc . '%')->get();
-            }
-            else{
-                if($kt == "no" || $kt == null){
-                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'],['provinsi_id','=',$pr]])->get();
-                }
-                else{
-                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'],['provinsi_id','=',$pr],['kota_id','=',$kt]])->get();
+            } else {
+                if ($kt == "no" || $kt == null) {
+                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'], ['provinsi_id', '=', $pr]])->get();
+                } else {
+                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'], ['provinsi_id', '=', $pr], ['kota_id', '=', $kt]])->get();
                 }
             }
         }
         return view('/admin/help/tb_ticket', ["arr" => $arr])->render();
     }
 
-    function to_delTicket(Request $request){
+    function to_delTicket(Request $request)
+    {
         Ticket::destroy($request->id);
         return redirect()->action([adminCTR::class, 'to_mTicket'])->with('berhasil', 'hapus');
     }
