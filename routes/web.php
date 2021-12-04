@@ -57,4 +57,8 @@ Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/dataKota', [adminCTR::class, 'load_kota']);
   Route::get('/dataTicket', [adminCTR::class, 'load_ticket']);
   Route::get('/deleteTicket/{id}', [adminCTR::class, 'to_delTicket']);
+
+  Route::get('/dataJadwal', [adminCTR::class, 'load_jadwal']);
+  Route::get('/cariJadwal', [adminCTR::class, 'cari_jadwal']);
+  Route::get('/delJadwal', [adminCTR::class, 'hapus_jadwal']);
 });

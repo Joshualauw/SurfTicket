@@ -16,8 +16,8 @@ class JadwalFactory extends Factory
         $hari = ["senin", "selasa", "rabu", "kamis", "jumat", "sabtu", "minggu"];
         return [
             "hari" => $hari[array_rand($hari)],
-            "jam_awal" => $this->faker->time,
-            "jam_akhir" => $this->faker->time,
+            "jam_awal" => $this->faker->time('H:i'),
+            "jam_akhir" => $this->faker->time('H:i'),
             "kuota" => rand(1, 100)
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal;
 use App\Models\Kota;
 use App\Models\User;
 use App\Models\Promo;
@@ -99,12 +100,8 @@ class adminCTR extends Controller
             echo "<script>alert('berhasil hapus ticket')</script>";
         }
 
-        $sh = "";
-        if($request->sch != ""){
-            $sh = $request->sch;
-        }
 
-        return view('admin/masTicket',["sch"=>$sh]);
+        return view('admin/masTicket');
     }
 
     function to_mPromo(Request $request)
@@ -211,6 +208,12 @@ class adminCTR extends Controller
         if ($berhasil == "ya") {
             echo "<script>alert('berhasil edit ticket')</script>";
         }
+        else if($berhasil == "jadwal_ya"){
+            echo "<script>alert('berhasil add jadwal')</script>";
+        }
+        else if($berhasil == "jadwal_edt"){
+            echo "<script>alert('berhasil edit jadwal')</script>";
+        }
 
         return view('admin/detailTicket', ["tkt" => $tkt]);
     }
@@ -255,6 +258,56 @@ class adminCTR extends Controller
 
     function change_jadwal(Request $request)
     {
+        if($request->action == "add"){
+            $rul = [
+                "hr_txt" => ["required"],
+                "mulai_txt" => ["required"],
+                "ahkir_txt" => ["required"],
+                "kt_txt" => ["required","min:1"]
+            ];
+            $this->validate($request, $rul);
+            $n = new Jadwal();
+            $n->ticket_id = $request->btn_id;
+            $n->hari = $request->hr_txt;
+            $n->jam_awal = $request->mulai_txt;
+            $n->jam_akhir = $request->ahkir_txt;
+            $n->kuota = $request->kt_txt;
+            $n->save();
+            return redirect()->back()->with('berhasil', 'jadwal_add');
+        }
+        else if($request->action == "edit"){
+            $n = Jadwal::find($request->btn_id);
+            $ctr=0;
+
+            if (($request->hr_txt != "" || $request->hr_txt != null) && $request->hr_txt != $n->hari) {
+                $n->hari = $request->hr_txt;
+                $ctr += 1;
+            }
+
+            if (($request->mulai_txt != "" || $request->mulai_txt  != null) && $request->mulai_txt  != $n->jam_awal) {
+                $n->jam_awal = $request->mulai_txt ;
+                $ctr += 1;
+            }
+
+            if (($request->ahkir_txt != "" || $request->ahkir_txt != null) && $request->ahkir_txt != $n->jam_akhir) {
+                $n->jam_akhir = $request->ahkir_txt;
+                $ctr += 1;
+            }
+
+            if (($request->kt_txt != "" || $request->kt_txt != null) && $request->kt_txt != $n->kuota) {
+                $n->kuota = $request->kt_txt;
+                $ctr += 1;
+            }
+
+            if($ctr==0){
+                return redirect()->back();
+            }
+            else{
+                $n->save();
+                return redirect()->back()->with('berhasil', 'jadwal_edt');
+            }
+        }
+
         return response()->json($request);
     }
 
@@ -390,5 +443,21 @@ class adminCTR extends Controller
     {
         Ticket::destroy($request->id);
         return redirect()->action([adminCTR::class, 'to_mTicket'])->with('berhasil', 'hapus');
+    }
+
+    function load_jadwal(Request $request){
+        $arr = Jadwal::where('ticket_id','=',$request->id_tik)->get();
+        return view('/admin/help/tb_jadwal', ["arr" => $arr])->render();
+    }
+
+    function cari_jadwal(Request $request)
+    {
+        $arr = Jadwal::find($request->id_jadwal);
+        return response()->json($arr);
+    }
+
+    function hapus_jadwal(Request $request)
+    {
+        Jadwal::destroy($request->id_jadwal);
     }
 }

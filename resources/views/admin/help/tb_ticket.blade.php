@@ -10,7 +10,7 @@
                         <div class="text-center">
                             <h5 class="fw-bolder"><?=$a->nama?></h5>
                             <?="Rp " . number_format($a->harga,0,',','.');?> <br>
-                            Kuota : <?=\App\Models\Jadwal::where("ticket_id", "=", $a->id)->count()?> <br>
+                            Total Kuota : <?=\App\Models\Jadwal::where("ticket_id", "=", $a->id)->sum('kuota')?> <br>
 
                             <?php
                                 $avg = \App\Models\Review::where("ticket_id", "=", $a->id)->avg('rating');

@@ -24,15 +24,19 @@ $pro = \App\Models\Provinsi::all();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
 
     <script>
-        function initKota(){
+        function initKota() {
             $.ajax({
                 method: "GET",
                 url: "{{ url('/dataKota') }}",
                 data: {
-                    id_pro: {{$tkt->provinsi_id}},
-                    id_kot: {{$tkt->kota_id}}
+                    id_pro: {{ $tkt->provinsi_id }},
+                    id_kot: {{ $tkt->kota_id }}
                 },
                 success: function(res) {
                     $("#sel_kot2").html('');
@@ -41,9 +45,34 @@ $pro = \App\Models\Provinsi::all();
             });
         }
 
-        $(document).ready(function(){
+        function loadData() {
+            $.ajax({
+                method: "GET",
+                data: {
+                    id_tik: {{ $tkt->id }}
+                },
+                url: "{{ url('/dataJadwal') }}",
+                success: function(res) {
+                    $("#isi").html('');
+                    $("#isi").append(res);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            loadData();
             initKota();
             $('.js-example-basic-single').select2();
+            $('.waktu').timepicker({
+                use24hours: true,
+                format: "HH:mm",
+                showMeridian: false
+            });
+
+            $('.waktu').change(function() {
+                console.log($(this).val());
+            });
+
             $('#sel_pro2').change(function() {
                 var val = $('#sel_pro2').val();
                 $.ajax({
@@ -58,14 +87,65 @@ $pro = \App\Models\Provinsi::all();
                     }
                 });
             });
-        })
 
+            $("#isi").on('click', '.tombol_edit', function() {
+                var vl = $(this).val();
+                console.log(vl);
+
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/cariJadwal') }}",
+                    data: {
+                        id_jadwal: vl
+                    },
+                    success: function(res) {
+                        $("#hr_txt").val(res["hari"]).change();
+                        $("#mulai_txt").val(res["jam_awal"]);
+                        $("#ahkir_txt").val(res["jam_akhir"]);
+                        $("#kt_txt").val(res["kuota"]);
+                        $("#action").val("edit");
+                        $("#btn_id").val(vl);
+                    }
+                });
+                $("#judul_modal").html("Edit Jadwal");
+                $("#btn_id").html("Edit");
+            });
+
+            $("#btn_add_jwl").click(function() {
+                $('#hr_txt').prop('selectedIndex', 0);
+                $("#mulai_txt").val('');
+                $("#ahkir_txt").val('');
+                $("#kt_txt").val('');
+                $("#action").val("add");
+                $("#btn_id").val({{$tkt->id}});
+                $("#judul_modal").html("Tambahkan Jadwal Baru");
+                $("#btn_id").html("add jadwal");
+            });
+
+            $("#isi").on('click', '.tombol_delete', function() {
+            var vl = $(this).val();
+
+            if (confirm('konfirmasi delete jadwal')) {
+                $.ajax({
+                    method: "GET",
+                    url: "{{ url('/delJadwal') }}",
+                    data: {
+                        id_jadwal: vl
+                    },
+                    success: function(res) {
+                        loadData();
+                    }
+                });
+            }
+        });
+        })
     </script>
+
+
 
 </head>
 
 <body>
-
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
@@ -82,7 +162,7 @@ $pro = \App\Models\Provinsi::all();
             </div>
 
 
-            <div class="container-fluid">
+            <div class="container-fluid" id="conta" value="{{ $tkt->id }}">
                 <div class="row">
                     <div class="col-lg-4 col-xlg-3 col-md-12">
                         <div class="col mb-5">
@@ -92,7 +172,8 @@ $pro = \App\Models\Provinsi::all();
                                     <div class="text-center">
                                         <h5 class="fw-bolder"><?= $tkt->nama ?></h5>
                                         <?= 'Rp ' . number_format($tkt->harga, 0, ',', '.') ?><br>
-                                        Kuota : <?= \App\Models\Jadwal::where('ticket_id', '=', $tkt->id)->count() ?>
+                                        Total Kuota :
+                                        <?= \App\Models\Jadwal::where('ticket_id', '=', $tkt->id)->sum('kuota') ?>
                                         <br>
                                         <?php
                                         $avg = \App\Models\Review::where('ticket_id', '=', $tkt->id)->avg('rating');
@@ -139,8 +220,8 @@ $pro = \App\Models\Provinsi::all();
                                     <div class="form-group mb-4">
                                         <label for="example-email" class="col-md-12 p-0">Provinsi</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <select class=" custom-select form-control js-example-basic-single" name="pr_txt"
-                                                id="sel_pro2">
+                                            <select class=" custom-select form-control js-example-basic-single"
+                                                name="pr_txt" id="sel_pro2">
                                                 @foreach ($pro as $item)
                                                     <?php
                                                 if($item->id == $tkt->provinsi_id){
@@ -162,21 +243,22 @@ $pro = \App\Models\Provinsi::all();
                                     <div class="form-group mb-4">
                                         <label for="example-email" class="col-md-12 p-0">Kabupaten/Kota</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <select class=" custom-select form-control js-example-basic-single" name="kt_txt"
-                                                id="sel_kot2">
+                                            <select class=" custom-select form-control js-example-basic-single"
+                                                name="kt_txt" id="sel_kot2">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">Harga</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="number" value="{{$tkt->harga}}" class="form-control p-0 border-0"
-                                                name="hr_txt">
+                                            <input type="number" value="{{ $tkt->harga }}"
+                                                class="form-control p-0 border-0" name="hr_txt">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <div class="col-sm-12">
-                                            <button name="btn_id" value="{{$tkt->id}}" type="submit" class="btn btn-success">Update Ticket</button>
+                                            <button name="btn_id" value="{{ $tkt->id }}" type="submit"
+                                                class="btn btn-success">Update Ticket</button>
                                         </div>
                                     </div>
                                 </form>
@@ -194,36 +276,13 @@ $pro = \App\Models\Provinsi::all();
                             <h3 class="box-title">Jadwal Ticket</h3>
 
 
-                            <button data-toggle="modal" data-target="#exampleModalCenter"
+                            <button data-toggle="modal" data-target="#exampleModalCenter" id="btn_add_jwl"
                                 class="btn btn-primary d-none d-md-block pull-right  hidden-xs hidden-sm waves-effect waves-light text-white">
                                 Tambahkan Jadwal Baru
                             </button>
 
+                            <div class="table-responsive" id="isi">
 
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Hari</th>
-                                            <th class="border-top-0">Jam </th>
-                                            <th class="border-top-0">Kuota</th>
-                                            <th class="border-top-0">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Senin - Jumat</td>
-                                            <td>07.00 - 17.00</td>
-                                            <td>30</td>
-                                            <td>
-                                                <button
-                                                    class="btn btn-warning d-none d-md-block pull-right hidden-xs hidden-sm waves-effect waves-light text-white">Edit</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
 
                         </div>
@@ -250,29 +309,38 @@ $pro = \App\Models\Provinsi::all();
                     </button>
                 </div>
                 <div class="modal-body p-4 py-5 p-md-5">
-                    <h3 class="text-center mb-3">Tambahkan Jadwal Baru </h3>
+                    <h3 class="text-center mb-3" id="judul_modal">Tambahkan Jadwal Baru </h3>
                     <form action="/cek_changeJadwal" method="post" class="signup-form">
                         @csrf
                         <div class="form-group mb-2">
                             <label>Hari</label>
-                            <input type="text" class="form-control" name="hr_txt" placeholder="hari">
+                            <select class="form-control" name="hr_txt" id="hr_txt">
+                                <option value="senin">Senin</option>
+                                <option value="selasa">Selasa</option>
+                                <option value="rabu">Rabu</option>
+                                <option value="kamis">Kamis</option>
+                                <option value="jumat">Jumat</option>
+                                <option value="sabtu">Sabtu</option>
+                                <option value="minggu">Minggu</option>
+                            </select>
                         </div>
                         <div class="form-group mb-2">
                             <label>Jam Mulai</label>
-                            <input type="time" name="mulai_txt" class="form-control" id="">
-
+                            <input type="time" name="mulai_txt" class="form-control waktu" id="mulai_txt">
                         </div>
                         <div class="form-group mb-2">
                             <label>Jam Berahkir</label>
-                            <input type="time" name="ahkir_txt" class="form-control" id="">
+                            <input type="time" name="ahkir_txt" class="form-control waktu" id="ahkir_txt">
                         </div>
                         <div class="form-group mb-2">
                             <label>Kuota</label>
-                            <input type="number" min="0" name="kt_txt" class="form-control" placeholder="kuota">
+                            <input type="number" min="0" name="kt_txt" class="form-control" placeholder="kuota"
+                                id="kt_txt">
                         </div>
+                        <input type="hidden" name="action" value="add" id="action">
                         <div class="form-group mb-2">
-                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">add
-                                jadwal</button>
+                            <button type="submit" name="btn_id" value="{{ $tkt->id }}" id="btn_id"
+                                class="form-control btn btn-primary rounded submit px-3">add jadwal</button>
                         </div>
                     </form>
                 </div>
@@ -281,7 +349,11 @@ $pro = \App\Models\Provinsi::all();
     </div>
 
 
-
+    @if ($errors->any())
+        <script>
+            alert('validation error');
+        </script>
+    @endif
 </body>
 
 </html>
