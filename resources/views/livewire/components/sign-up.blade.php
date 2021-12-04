@@ -84,4 +84,7 @@
             </div>
         </div>
     </div>
+    @if (Session::has("flash"))
+    @livewire('components.the-modal', ["flash" => Session::get('flash')])
+    @endif
 </div>

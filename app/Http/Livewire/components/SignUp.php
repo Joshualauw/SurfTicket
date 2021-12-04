@@ -50,9 +50,14 @@ class SignUp extends Component
         ];
 
         if (Auth::attempt($credentials)) {
-            $this->emit("loginSuccess", $request);
+            $request->session()->regenerate();
+            session()->flash("flash", ["title" => 'Sukses!', "message" => "Berhasil login", "type" => "success"]);
+            if (Auth::user()->isAdmin) {
+                return redirect()->to("/admin");
+            }
+            return redirect()->to('/home');
         } else {
-            $this->emit("loginFailed");
+            session()->flash("flash", ["title" => 'Gagal!', "message" => "invalid credentials", "type" => "error"]);
         }
     }
 
@@ -83,8 +88,8 @@ class SignUp extends Component
             "password" => bcrypt($this->password),
             "email" => $this->email
         ]);
-        $this->reset("username", "password", "nama", "email", "confirm", "loginPassword", "loginUsername");
-        $this->emitUp("registerSuccess");
+        $this->reset();
+        session()->flash("flash", ["title" => 'Sukses!', "message" => "Berhasil Mendaftar", "type" => "success"]);
     }
 
     public function render()

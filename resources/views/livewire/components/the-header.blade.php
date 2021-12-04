@@ -7,7 +7,7 @@
         @auth
         <li>
             <img class="w-9 h-9 rounded-full relative cursor-pointer" wire:click='toogleDropdown' wire:model='isOpen'
-                src="https://kerma.widyatama.ac.id/wp-content/uploads/2021/05/blank-profile-picture-973460_1280.png">
+                src="{{ asset(Auth::user()->img_dir) }}">
             @if ($isOpen)
             <div class="origin-top-right absolute right-20 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
@@ -30,4 +30,7 @@
         </li>
         @endauth
     </ul>
+    @if (Session::has("flash"))
+    @livewire('components.the-modal', ["flash" => Session::get('flash')])
+    @endif
 </div>

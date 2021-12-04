@@ -1,10 +1,8 @@
 <div class="flex items-center justify-center w-full mt-10">
     <div class="flex flex-col space-y-3 items-center justify-center w-1/2 h-full">
         <img src="{{ asset($img_dir) }}" wire:model='img_dir' alt="" class="rounded-full w-56 h-56">
-        <button class="py-1 px-3 rounded-md text-white bg-blue-600 hover:bg-blue-500">Edit Photo <i
-                class="fas fa-edit"></i></button>
     </div>
-    <form wire:click.prevent='updateUserData' class="flex flex-col w-1/2">
+    <form wire:submit.prevent='updateUserData' class="flex flex-col w-1/2" enctype='multipart/form-data'>
         <p class="text-sm">Username</p>
         <input type="text"
             class="rounded-md py-1 px-2 text-md mb-2 bg-gray-300 @error('username') ring-1 ring-red-500 @enderror"
@@ -29,6 +27,8 @@
         <p class="text-red-500 text-sm">{{ $message }}</p>
         @enderror
 
+        <p class="text-sm">Profile Picture</p>
+        <input type="file" class="rounded-md py-1 px-2 text-md mb-2 bg-gray-300" wire:model='img_file'>
         <p class="text-sm">Alamat</p>
         <input type="text" class="rounded-md py-1 px-2 text-md mb-2 bg-gray-300" wire:model='alamat'>
         <p class="text-sm">No.Telp</p>
@@ -39,4 +39,7 @@
             class="py-1 px-3 mt-3 bg-green-700 hover:bg-green-600 rounded-md text-white text-md self-end">Save
             Changes</button>
     </form>
+    @if (Session::has("flash"))
+    @livewire('components.the-modal', ["flash" => Session::get('flash')])
+    @endif
 </div>
