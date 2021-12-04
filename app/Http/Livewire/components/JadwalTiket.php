@@ -45,8 +45,10 @@ class JadwalTiket extends Component
                 ]);
             }
         }
-        if ($jadwals != [] && Auth::check()) {
-            return redirect()->to("/checkout?jadwals=" . json_encode($jadwals));
+        if (Auth::check()) {
+            if ($jadwals != []) {
+                return redirect()->to("/checkout?jadwals=" . json_encode($jadwals));
+            }
         } else {
             session()->flash("flash", ["Anda harus login terlebih dahulu", "error"]);
         }
