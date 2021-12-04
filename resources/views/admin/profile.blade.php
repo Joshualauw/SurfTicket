@@ -40,10 +40,10 @@
                             <div class="user-bg">
                                 <div class="overlay-box">
                                     <div class="user-content">
-                                        <a><img src="plugins/images/users/varun.jpg" class="thumb-lg img-circle"
+                                        <a><img src="{{Auth::user()->img_dir}}" class="thumb-lg img-circle"
                                                 alt="img"></a>
-                                        <h4 class="text-white mt-2">Admin Melon</h4>
-                                        <h5 class="text-white mt-2">melon@myadmin.com</h5>
+                                        <h4 class="text-white mt-2">{{Auth::user()->nama}}</h4>
+                                        <h5 class="text-white mt-2">{{Auth::user()->email}}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -59,42 +59,35 @@
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">Nama</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="Admin Melon" class="form-control p-0 border-0"
+                                            <input type="text" value="{{Auth::user()->nama}}" class="form-control p-0 border-0"
                                                 name="nama_txt">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">Username</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="leMelon" class="form-control p-0 border-0"
+                                            <input type="text" value="{{Auth::user()->username}}" class="form-control p-0 border-0"
                                                 name="user_txt">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <label for="example-email" class="col-md-12 p-0">Email</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="email" value="melon@myadmin.com"
+                                            <input type="email" value="{{Auth::user()->email}}"
                                                 class="form-control p-0 border-0" name="email_txt" id="example-email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <label class="col-md-12 p-0">Password</label>
-                                        <div class="col-md-12 border-bottom p-0">
-                                            <input type="password" value="password" class="form-control p-0 border-0"
-                                                name="pass_txt">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">No telp</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="0811 8881 1881" class="form-control p-0 border-0"
+                                            <input type="text" value="{{Auth::user()->no_telp}}" class="form-control p-0 border-0"
                                                 onkeypress="return cekKeyPress(event)" name="tlp_txt">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">Alamat</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="jln Kembang 12 Bandung" class="form-control p-0 border-0"
+                                            <input type="text" value="{{Auth::user()->alamat}}" class="form-control p-0 border-0"
                                                 name="alt_txt">
                                         </div>
                                     </div>
@@ -102,19 +95,19 @@
                                         <label class="col-sm-12">Tanggal Lahir</label>
 
                                         <div class="col-sm-12 border-bottom">
-                                            <input type="date" name="tgl_txt" value="1997-12-12" class="form-control">
+                                            <input type="date" name="tgl_txt" value="{{Auth::user()->tgl_lahir}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <div class="col-sm-12">
-                                           <button type="submit" class="btn btn-success">Update Profile</button>
+                                           <button type="submit" name="btn_id" class="btn btn-success" value="{{Auth::user()->id}}">Update Profile</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -126,7 +119,7 @@
     <script>
         function cekKeyPress(evt) {
             var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-            if (ASCIICode > 32 && (ASCIICode < 48 || ASCIICode > 57))
+            if ((ASCIICode < 48 || ASCIICode > 57))
                 return false;
             return true;
         }

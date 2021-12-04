@@ -207,7 +207,7 @@ $pro = \App\Models\Provinsi::all();
                         </div>
                         <div class="form-group mb-2">
                             <label>Provinsi</label> <br>
-                            <select class=" custom-select form-control " name="pr_txt" id="sel_pro2">
+                            <select class=" custom-select form-control selku" name="pr_txt" id="sel_pro2">
                                 @foreach ($pro as $item)
                                     <option value="<?= $item->id ?>"><?= $item->nama ?></option>
                                 @endforeach
@@ -215,7 +215,7 @@ $pro = \App\Models\Provinsi::all();
                         </div>
                         <div class="form-group mb-2">
                             <label>Kabupaten/kota</label> <br>
-                            <select class="custom-select form-control" name="kt_txt" id="sel_kot2">
+                            <select class="custom-select form-control selku" name="kt_txt" id="sel_kot2">
                             </select>
                         </div>
                         <div class="form-group mb-2">
