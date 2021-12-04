@@ -137,7 +137,7 @@
 
         $(document).ready(function() {
             loadData();
-            $("#cari_dt").change(function() {
+            $("#cari_dt").keyup(function() {
                 loadData();
             });
 

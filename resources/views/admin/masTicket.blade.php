@@ -33,6 +33,7 @@ $pro = \App\Models\Provinsi::all();
             var srch = $('#in_cari_tik').val();
             var pro = $('#sel_pro').val();
             var kot = $('#sel_kot').val();
+            console.log(srch);
             $.ajax({
                 method: "GET",
                 url: "{{ url('/dataTicket') }}",
@@ -47,8 +48,6 @@ $pro = \App\Models\Provinsi::all();
                 }
             });
 
-
-            $('#in_cari_tik').val("");
         }
 
         function initKota() {
@@ -107,7 +106,7 @@ $pro = \App\Models\Provinsi::all();
                 loadData();
             })
 
-            $('#in_cari_tik').change(function() {
+            $('#in_cari_tik').keyup(function() {
                 loadData();
             })
         });

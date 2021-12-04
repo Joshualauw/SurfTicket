@@ -18,7 +18,7 @@
                 <li class=" in">
                     <form role="search" class="app-search d-none d-md-block me-3">
                         <input type="text" id="in_cari_tik" placeholder="Cari Ticket" class="form-control mt-0">
-                        <a href="" class="active">
+                        <a href="/masterTicket" class="active">
                             <i class="fa fa-search"></i>
                         </a>
                     </form>

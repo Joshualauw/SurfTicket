@@ -98,7 +98,13 @@ class adminCTR extends Controller
         } else if ($berhasil == "hapus") {
             echo "<script>alert('berhasil hapus ticket')</script>";
         }
-        return view('admin/masTicket');
+
+        $sh = "";
+        if($request->sch != ""){
+            $sh = $request->sch;
+        }
+
+        return view('admin/masTicket',["sch"=>$sh]);
     }
 
     function to_mPromo(Request $request)
