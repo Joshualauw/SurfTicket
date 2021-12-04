@@ -1,20 +1,37 @@
-<div class="flex justify-center items-center h-64 w-3/4 mt-20 mx-auto bg-gray-300 rounded-lg relative">
-    <div wire:click="swipeLeft" class="absolute top-1/2 -left-8">
-        <i class="fas fa-chevron-left cursor-pointer text-3xl"></i>
+<div class="flex justify-center items-center h-64 w-3/4 mt-20 mx-auto bg-gray-300 rounded-lg relative" x-data>
+    <div class="swiper mySwiper w-full h-full relative">
+        <div class="swiper-wrapper rounded-md shadow-lg">
+            @foreach ($images as $image)
+            <a href="promo/{{ $image->id }}" class="swiper-slide hover:border-4 hover:border-green-700">
+                <img src="{{ asset($image->img_dir) }}" class="w-full h-full" alt="">
+            </a>
+            @endforeach
+        </div>
+        <div class="swiper-pagination"></div>
     </div>
-    <div wire:click="swipeRight" wire:poll.5000ms="swipeRight" class="absolute top-1/2 -right-8">
-        <i class="fas fa-chevron-right cursor-pointer text-3xl"></i>
+    <div class="swiper-button-prev-unique absolute -left-10 top-1/2"><i class="fas fa-chevron-left text-4xl"></i>
     </div>
-    <div class="overflow-hidden h-full w-1/5 cursor-pointer">
-        <img src="{{ $img1 }}" class="object-cover object-right w-full h-full" alt="">
+    <div class="swiper-button-next-unique absolute -right-10 top-1/2"><i class="fas fa-chevron-right text-4xl"></i>
     </div>
-    <div class="relative h-80 w-3/5 cursor-pointer">
-        {{-- <div class="absolute -right-0.5 -top-0.5 bg-red-600 p-3 text-white text-lg rounded-bl-sm">SURFTICKETMANTAP
-            50%!
-        </div> --}}
-        <img src="{{ $img2 }}" class="w-full h-full" alt="">
-    </div>
-    <div class="h-full overflow-hidden w-1/5 cursor-pointer">
-        <img src="{{ $img3 }}" class="object-cover object-left w-full h-full" alt="">
-    </div>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            slidesPerView: 2,
+            spaceBetween: 10,
+            centeredSlides: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next-unique",
+              prevEl: ".swiper-button-prev-unique",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            mousewheel: true,
+            keyboard: true,
+          });
+    </script>
 </div>

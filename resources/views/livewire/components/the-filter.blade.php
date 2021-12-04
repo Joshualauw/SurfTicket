@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center space-x-3 h-full text-md">
+<div class="flex justify-center items-center space-x-3 h-full my-8 text-md">
     <div>
         <i class="fas fa-search text-green-700 font-semibold"></i>
         <input type="text" class="rounded-lg bg-gray-200 w-56 py-1 px-2" placeholder="Search here.."

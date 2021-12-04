@@ -8,9 +8,16 @@
     @livewire("components.the-header")
     @livewire("components.the-banner")
 
-    <div class="px-24 w-full mt-28">
+    {{-- <div class="px-24 w-full mt-28">
         <h1 class="text-4xl font-semibold text-green-600">Tiket Terlaris</h1>
         @livewire('components.list-ticket', ["layout" => "scroll"])
+    </div> --}}
+
+    <div class="flex flex-col justify-center items-center w-3/4 mx-auto mt-32">
+        <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">Tiket Terlaris</p>
+        <div class="w-full mx-auto">
+            @livewire('components.list-ticket', ["layout" => "scroll"])
+        </div>
     </div>
 
     @include('layouts.footer')

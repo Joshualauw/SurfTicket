@@ -7,11 +7,9 @@
 
     @livewire('components.the-header')
 
-    <div class="px-24 w-full mt-16">
-        <div class="flex justify-between items-center h-full mb-10">
-            <h1 class="text-4xl font-semibold text-green-600">Tiket Tersedia</h1>
-            @livewire('components.the-filter')
-        </div>
+    <div class="flex flex-col justify-center items-center w-3/4 mx-auto mt-16">
+        <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">Tiket Tersedia</p>
+        @livewire('components.the-filter')
         @livewire('components.list-ticket', ["layout" => "grid"])
     </div>
 
