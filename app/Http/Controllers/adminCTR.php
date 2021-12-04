@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kota;
 use App\Models\User;
 use App\Models\Promo;
+use App\Models\Ticket;
 use App\Rules\cek_unique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,7 @@ class adminCTR extends Controller
     //
     function to_adminHome()
     {
+
         return view('admin/homeAdmin');
     }
 
@@ -39,8 +42,15 @@ class adminCTR extends Controller
         return view('admin/masUser');
     }
 
-    function to_mTicket()
+    function to_mTicket(Request $request)
     {
+        $berhasil = $request->session()->pull('berhasil');
+        if ($berhasil == "ya") {
+            echo "<script>alert('berhasil add ticket baru')</script>";
+        }
+        else if($berhasil == "hapus"){
+            echo "<script>alert('berhasil hapus ticket')</script>";
+        }
         return view('admin/masTicket');
     }
 
@@ -63,7 +73,35 @@ class adminCTR extends Controller
 
     function cek_addTicket(Request $request)
     {
-        return response()->json($request);
+        $new_id = Ticket::max('id') + 1;
+        $rul = [
+            "nm_txt" => ["required"],
+            "hr_txt" => ["required"],
+            "ds_txt" => ["required"],
+            "pr_txt" => ["required"],
+            "kt_txt" => ["required"]
+        ];
+        $this->validate($request, $rul);
+
+
+
+        if ($request->hasFile('gb_txt')) {
+            Storage::putFileAs('/public/banner_ticket', $request->file('gb_txt'), $new_id . "." . $request->file('gb_txt')->getClientOriginalExtension());
+            $filnam = 'storage/banner_ticket/' . $new_id . "." . $request->file('gb_txt')->getClientOriginalExtension();
+        } else {
+            $filnam = 'storage/banner_ticket/def.jpg';
+        }
+
+        $n = new Ticket();
+        $n->nama = $request->nm_txt;
+        $n->deskripsi = $request->ds_txt;
+        $n->harga = $request->hr_txt;
+        $n->provinsi_id = $request->pr_txt;
+        $n->kota_id = $request->kt_txt;
+        $n->img_dir = $filnam;
+        $n->save();
+
+        return redirect()->action([adminCTR::class, 'to_mTicket'])->with('berhasil', 'ya');
     }
 
     function change_promo(Request $request)
@@ -216,5 +254,49 @@ class adminCTR extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    function load_kota(Request $request){
+        $arr = Kota::where('provinsi_id','=',$request->id_pro)->get();
+        return view('/admin/help/opt_kota', ["arr" => $arr])->render();
+    }
+
+    function load_ticket(Request $request){
+        $sc = $request->sch;
+        $pr = $request->pro;
+        $kt = $request->kot;
+
+        if($sc == "" || $sc == null){
+            if($pr == "no" || $pr == null){
+                $arr = Ticket::all();
+            }
+            else{
+                if($kt == "no" || $kt == null){
+                    $arr = Ticket::where('provinsi_id','=',$pr)->get();
+                }
+                else{
+                    $arr = Ticket::where([['provinsi_id','=',$pr],['kota_id','=',$kt]])->get();
+                }
+            }
+        }
+        else{
+            if($pr == "no"  || $pr == null){
+                $arr = Ticket::where("nama", 'like', '%' . $sc . '%')->get();
+            }
+            else{
+                if($kt == "no" || $kt == null){
+                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'],['provinsi_id','=',$pr]])->get();
+                }
+                else{
+                    $arr = Ticket::where([["nama", 'like', '%' . $sc . '%'],['provinsi_id','=',$pr],['kota_id','=',$kt]])->get();
+                }
+            }
+        }
+        return view('/admin/help/tb_ticket', ["arr" => $arr])->render();
+    }
+
+    function to_delTicket(Request $request){
+        Ticket::destroy($request->id);
+        return redirect()->action([adminCTR::class, 'to_mTicket'])->with('berhasil', 'hapus');
     }
 }

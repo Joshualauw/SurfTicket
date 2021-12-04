@@ -16,7 +16,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string("nama");
-            $table->text("img_dir")->default("https://i1.wp.com/researchictafrica.net/wp/wp-content/uploads/2016/10/default-profile-pic.jpg?ssl=1");
+            $table->text("img_dir")->default("storage/banner_ticket/def.jpg");
             $table->string("deskripsi");
             $table->foreignId("provinsi_id");
             $table->foreignId("kota_id");

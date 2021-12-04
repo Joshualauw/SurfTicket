@@ -16,7 +16,7 @@ class TicketFactory extends Factory
     {
         return [
             "nama" => $this->faker->word(),
-            "img_dir" => $this->faker->imageUrl(400, 400, "ticket", true),
+            "img_dir" => "storage/banner_ticket/def.jpg",
             "deskripsi" => $this->faker->text(200),
             "harga" => rand(1, 10) * 50000
         ];
