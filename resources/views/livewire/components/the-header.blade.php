@@ -5,11 +5,11 @@
         <li><a href="/tickets" class="hover:border-b-2 hover:border-green-200 pb-1">Tickets</a></li>
         <li><a href="/" class="hover:border-b-2 hover:border-green-200 pb-1">About</a></li>
         @auth
-        <li>
-            <img class="w-9 h-9 rounded-full relative cursor-pointer" wire:click='toogleDropdown' wire:model='isOpen'
+        <li x-data="{isOpen : false}">
+            <img class="w-9 h-9 rounded-full relative cursor-pointer" x-on:click="isOpen = !isOpen"
                 src="{{ asset(Auth::user()->img_dir) }}">
-            @if ($isOpen)
-            <div class="origin-top-right absolute right-20 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+            <div x-show="isOpen" x-transition.scale
+                class="origin-top-right absolute right-20 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                 <div class="py-1" role="none">
                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -26,11 +26,7 @@
                     </button>
                 </div>
             </div>
-            @endif
         </li>
         @endauth
     </ul>
-    @if (Session::has("flash"))
-    @livewire('components.the-modal', ["flash" => Session::get('flash')])
-    @endif
 </div>

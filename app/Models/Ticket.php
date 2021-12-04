@@ -19,6 +19,11 @@ class Ticket extends Model
         return $this->hasMany(Jadwal::class);
     }
 
+    public function htransaksi()
+    {
+        return $this->hasMany(HTransaksi::class);
+    }
+
     public function kota()
     {
         return $this->belongsTo(Kota::class);

@@ -14,13 +14,13 @@ class Transaksi extends Model
         "id"
     ];
 
-    public function user()
+    public function htransaksi()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(HTransaksi::class);
     }
 
     public function jadwal()
     {
-        return $this->hasMany(Jadwal::class);
+        return $this->belongsTo(Jadwal::class);
     }
 }

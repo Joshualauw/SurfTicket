@@ -70,11 +70,8 @@ class UserEdit extends Component
             "img_dir" => $this->img_dir
         ]);
 
-        session()->flash("flash", [
-            "title" => "Sukses!",
-            "message" => "Sukses Update Data",
-            "type" => "success"
-        ]);
+        session()->flash("flash", ["sukses update data!", "success"]);
+        $this->emit("userDataUpdated");
     }
 
     public function render()

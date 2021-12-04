@@ -18,4 +18,9 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Ticket::class);
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

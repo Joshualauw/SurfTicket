@@ -8,12 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class TheHeader extends Component
 {
-    public $isOpen;
-
-    public function toogleDropdown()
-    {
-        $this->isOpen = !$this->isOpen;
-    }
+    protected $listeners = [
+        "userUpdated" => '$refresh'
+    ];
 
     public function signOut(Request $request)
     {
