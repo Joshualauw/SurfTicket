@@ -20,16 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 //USERS
-Route::middleware('isUser')->group(function () {
-  Route::get('/', Main::class)->name('main');
-  Route::get('/main', Main::class);
-  Route::get("/home", Home::class);
-  Route::get("/tickets", Tickets::class);
-  Route::get("/ticket/{id}", Ticket::class);
+Route::get('/', Main::class)->name('main');
+Route::get('/main', Main::class);
+Route::get("/home", Home::class);
+Route::get("/tickets", Tickets::class);
+Route::get("/ticket/{id}", Ticket::class);
 
-  Route::middleware("auth")->group(function () {
-    Route::get('/settings', Settings::class);
-  });
+Route::middleware(["auth", "isUser"])->group(function () {
+  Route::get('/settings', Settings::class);
 });
 
 //ADMINS
