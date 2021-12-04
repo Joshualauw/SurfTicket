@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Review;
-use App\Models\Transaksi;
+use App\Models\HTransaksi;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -18,9 +18,9 @@ class User extends Authenticatable
         "id"
     ];
 
-    public function transaksi()
+    public function htransaksi()
     {
-        return $this->belongsTo(Transaksi::class);
+        return $this->hasMany(HTransaksi::class);
     }
 
     public function reviews()

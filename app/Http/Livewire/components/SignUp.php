@@ -24,7 +24,6 @@ class SignUp extends Component
 
     public function mount()
     {
-        $this->modalOpen = false;
         $this->computedLogin = "font-semibold text-lg";
     }
 
@@ -51,13 +50,13 @@ class SignUp extends Component
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            session()->flash("flash", ["title" => 'Sukses!', "message" => "Berhasil login", "type" => "success"]);
+            session()->flash("flash", ["berhasil login", "success"]);
             if (Auth::user()->isAdmin) {
                 return redirect()->to("/admin");
             }
             return redirect()->to('/home');
         } else {
-            session()->flash("flash", ["title" => 'Gagal!', "message" => "invalid credentials", "type" => "error"]);
+            session()->flash("flash", ["Gagal login", "error"]);
         }
     }
 
@@ -89,7 +88,7 @@ class SignUp extends Component
             "email" => $this->email
         ]);
         $this->reset();
-        session()->flash("flash", ["title" => 'Sukses!', "message" => "Berhasil Mendaftar", "type" => "success"]);
+        session()->flash("flash", ["berhasil mendaftar", "success"]);
     }
 
     public function render()

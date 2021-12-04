@@ -1,10 +1,10 @@
-<input type="hidden" id='flash_title' value="{{ $title }}">
-<input type="hidden" id='flash_message' value="{{ $message }}">
-<input type="hidden" id='flash_type' value="{{ $type }}">
-<script>
-   Swal.fire(
-        $('#flash_title').val(),
-        $('#flash_message').val(),
-        $('#flash_type').val()
-    )
-</script>
+<div>
+    <input type="hidden" value="{{ $message }}" id="modal_message">
+    <input type="hidden" value="{{ $type }}" id="modal_type">
+    <script>
+        Swal.fire({
+            text: $("#modal_message").val(),
+            icon: $("#modal_type").val()
+        });
+    </script>
+</div>

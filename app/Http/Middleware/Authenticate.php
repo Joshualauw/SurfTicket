@@ -20,7 +20,7 @@ class Authenticate extends Middleware
                 "message" => "Anda harus login terlebih dahulu!",
                 "type" => "error"
             ]);
-            return route('main');
+            return back();
         }
     }
 }

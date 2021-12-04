@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\adminCTR;
+use App\Http\Livewire\Pages\Checkout;
 use App\Http\Livewire\Pages\Main;
 use App\Http\Livewire\Pages\Home;
 use App\Http\Livewire\Pages\Settings;
@@ -28,6 +29,7 @@ Route::get("/ticket/{id}", Ticket::class);
 
 Route::middleware(["auth", "isUser"])->group(function () {
   Route::get('/settings', Settings::class);
+  Route::get("/checkout", Checkout::class);
 });
 
 //ADMINS
