@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->foreignId("user_id");
             $table->foreignId("ticket_id");
             $table->integer("rating");
-            $table->text("comment");
+            $table->text("comment")->nullable();
             $table->timestamps();
         });
     }

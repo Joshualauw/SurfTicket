@@ -18,14 +18,31 @@
                             @else
                             <i class="fas fa-star text-lg text-gray-300"></i>
                             @endif
-                            @endfor
+                        @endfor
                     </div>
                     <p class="text-xs">{{ $review->comment }}</p>
                 </div>
             </div>
             @endforeach
-            <button class="py-1 px-3 bg-green-700 hover:bg-green-600 text-white text-sm self-end rounded-md mt-5">Tambah
-                Review</button>
+            {{ $reviews->links() }}
+            @endif
+            <div class="flex flex-col justify-end items-end space-y-3 mt-5">
+                <textarea wire:model='reviewText' class="rounded-md bg-gray-300 p-1" cols="50" rows="3"></textarea>
+                <div class="flex space-x-5">
+                    <div>
+                        @for ($i=0; $i<5; $i++)
+                            @if ($i<$reviewRating)
+                                <i class="fas fa-star text-lg cursor-pointer text-yellow-300" wire:click='setRating({{ $i }})'></i>
+                            @else
+                                <i class="fas fa-star text-lg cursor-pointer text-gray-300" wire:click='setRating({{ $i }})'></i>
+                            @endif
+                        @endfor
+                    </div>
+                    <button wire:click='tambahReview' class="py-1 px-3 bg-green-700 hover:bg-green-600 text-white text-sm self-end rounded-md">{{ $isEdit ? 'Edit Review' : 'Tambah Review' }}</button>
+                </div>
+            </div>
         </div>
+        @if (Session::has("flash"))
+        @livewire('components.the-modal', ["flash" => Session::get("flash")])
         @endif
 </div>
