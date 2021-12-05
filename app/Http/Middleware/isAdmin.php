@@ -20,11 +20,7 @@ class isAdmin
         if (Auth::user()->isAdmin) {
             return $next($request);
         } else {
-            session()->flash("flash", [
-                "title" => "Not Authorized",
-                "message" => "Sadar diri bang",
-                "type" => "error"
-            ]);
+            session()->flash("flash", ["Not Authorized", "error"]);
             return redirect()->to("/home");
         }
     }

@@ -10,7 +10,7 @@
         <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">My Tickets</p>
         <div class="grid grid-cols-4 gap-8 mt-12">
             @foreach ($htrans as $h)
-            <div class="flex flex-col justify-start items-center h-60">
+            <div class="flex flex-col justify-start items-center space-y-2 h-60">
                 <a href="/ticket/{{ $h->ticket->id }}"
                     class="w-full {{ $h->status == "dikonfirmasi" ? "h-52" : "h-full" }} flex justify-center items-center relative cursor-pointer hover:opacity-80 transition transform duration-300 overflow-hidden">
                     <img src="{{ asset($h->ticket->img_dir) }}" class="bg-cover w-full h-full" alt="">
