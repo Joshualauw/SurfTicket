@@ -20,6 +20,8 @@ class CreateHTransaksisTable extends Migration
             $table->integer("total");
             $table->enum("status", ["menunggu", "dikonfirmasi", "ditolak"]);
             $table->text("img_dir");
+            $table->date('tanggal_acc')->nullable();
+            $table->string("kode_unik")->nullable();
             $table->timestamps();
         });
     }

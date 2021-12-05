@@ -182,7 +182,6 @@
 
             $("#isi").on('click', '.tombol_delete', function() {
                 var vl = $(this).val();
-                console.log(vl);
 
                 if (confirm('konfirmasi delete promo')) {
                     $.ajax({

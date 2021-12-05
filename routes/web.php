@@ -65,4 +65,10 @@ Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/dataJadwal', [adminCTR::class, 'load_jadwal']);
   Route::get('/cariJadwal', [adminCTR::class, 'cari_jadwal']);
   Route::get('/delJadwal', [adminCTR::class, 'hapus_jadwal']);
+
+  Route::get('/dataTrans',[adminCTR::class, 'load_trans']);
+  Route::get('/tolTrans',[adminCTR::class, 'tolak_trans']);
+  Route::get('/terTrans',[adminCTR::class, 'terima_trans']);
+
+  Route::get('/tes',[adminCTR::class, 'test_email']);
 });

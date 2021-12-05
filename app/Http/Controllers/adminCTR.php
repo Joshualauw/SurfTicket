@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\invoiceTrans;
 use App\Models\HTransaksi;
 use App\Models\Jadwal;
 use App\Models\Kota;
@@ -11,9 +12,11 @@ use App\Models\Ticket;
 use App\Models\Transaksi;
 use App\Rules\cek_unique;
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 
@@ -22,14 +25,14 @@ class adminCTR extends Controller
     //
     function to_adminHome()
     {
-// //         SELECT    COUNT(*)
-// // FROM      table_emp
-// // WHERE     YEAR(ARR_DATE) = '2012'
-// // GROUP BY  MONTH(ARR_DATE)
+        // //         SELECT    COUNT(*)
+        // // FROM      table_emp
+        // // WHERE     YEAR(ARR_DATE) = '2012'
+        // // GROUP BY  MONTH(ARR_DATE)
 
-//         $arr = HTransaksi::where([date_format('created_at','Y'),"=",Carbon::now()->year],[Carbon::parse('created_at')->month,"=",12])->count();
+        //         $arr = HTransaksi::where([date_format('created_at','Y'),"=",Carbon::now()->year],[Carbon::parse('created_at')->month,"=",12])->count();
 
-//         return response()->json($arr);
+        //         return response()->json($arr);
         return view('admin/homeAdmin');
     }
 
@@ -130,7 +133,7 @@ class adminCTR extends Controller
     function to_mTrans()
     {
 
-        return view('admin/masTrans',["arr"=>HTransaksi::where("status","=","menunggu")->get()]);
+        return view('admin/masTrans');
     }
 
     function cek_addTicket(Request $request)
@@ -219,11 +222,9 @@ class adminCTR extends Controller
         $berhasil = $request->session()->pull('berhasil');
         if ($berhasil == "ya") {
             echo "<script>alert('berhasil edit ticket')</script>";
-        }
-        else if($berhasil == "jadwal_ya"){
+        } else if ($berhasil == "jadwal_ya") {
             echo "<script>alert('berhasil add jadwal')</script>";
-        }
-        else if($berhasil == "jadwal_edt"){
+        } else if ($berhasil == "jadwal_edt") {
             echo "<script>alert('berhasil edit jadwal')</script>";
         }
 
@@ -270,12 +271,12 @@ class adminCTR extends Controller
 
     function change_jadwal(Request $request)
     {
-        if($request->action == "add"){
+        if ($request->action == "add") {
             $rul = [
                 "hr_txt" => ["required"],
                 "mulai_txt" => ["required"],
                 "ahkir_txt" => ["required"],
-                "kt_txt" => ["required","min:1"]
+                "kt_txt" => ["required", "min:1"]
             ];
             $this->validate($request, $rul);
             $n = new Jadwal();
@@ -286,10 +287,9 @@ class adminCTR extends Controller
             $n->kuota = $request->kt_txt;
             $n->save();
             return redirect()->back()->with('berhasil', 'jadwal_add');
-        }
-        else if($request->action == "edit"){
+        } else if ($request->action == "edit") {
             $n = Jadwal::find($request->btn_id);
-            $ctr=0;
+            $ctr = 0;
 
             if (($request->hr_txt != "" || $request->hr_txt != null) && $request->hr_txt != $n->hari) {
                 $n->hari = $request->hr_txt;
@@ -297,7 +297,7 @@ class adminCTR extends Controller
             }
 
             if (($request->mulai_txt != "" || $request->mulai_txt  != null) && $request->mulai_txt  != $n->jam_awal) {
-                $n->jam_awal = $request->mulai_txt ;
+                $n->jam_awal = $request->mulai_txt;
                 $ctr += 1;
             }
 
@@ -311,10 +311,9 @@ class adminCTR extends Controller
                 $ctr += 1;
             }
 
-            if($ctr==0){
+            if ($ctr == 0) {
                 return redirect()->back();
-            }
-            else{
+            } else {
                 $n->save();
                 return redirect()->back()->with('berhasil', 'jadwal_edt');
             }
@@ -457,8 +456,9 @@ class adminCTR extends Controller
         return redirect()->action([adminCTR::class, 'to_mTicket'])->with('berhasil', 'hapus');
     }
 
-    function load_jadwal(Request $request){
-        $arr = Jadwal::where('ticket_id','=',$request->id_tik)->get();
+    function load_jadwal(Request $request)
+    {
+        $arr = Jadwal::where('ticket_id', '=', $request->id_tik)->get();
         return view('/admin/help/tb_jadwal', ["arr" => $arr])->render();
     }
 
@@ -471,5 +471,47 @@ class adminCTR extends Controller
     function hapus_jadwal(Request $request)
     {
         Jadwal::destroy($request->id_jadwal);
+    }
+
+    function load_trans()
+    {
+        return view('/admin/help/tb_trans', ["arr" => HTransaksi::where("status", "=", "menunggu")->get()])->render();
+    }
+
+    function tolak_trans(Request $request)
+    {
+        $n = HTransaksi::find($request->id_trans);
+        $n->status = "ditolak";
+        $n->save();
+    }
+
+    function terima_trans(Request $request)
+    {
+
+        $n = HTransaksi::find($request->id_trans);
+        $n->status = "dikonfirmasi";
+        $n->tanggal_acc = Carbon::now();
+        $n->kode_unik = strtoupper($this->generateRandomString(20));
+        $penerima = User::find($n->user_id)->email;
+        $n->save();
+        Mail::to($penerima)->send(new invoiceTrans($n));
+        return "wait";
+    }
+
+    function test_email()
+    {
+        return view('invoice', ["ht" => HTransaksi::find(1)]);
+    }
+
+
+    public  function generateRandomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
