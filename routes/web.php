@@ -4,10 +4,15 @@ use App\Http\Controllers\adminCTR;
 use App\Http\Livewire\Pages\Checkout;
 use App\Http\Livewire\Pages\Main;
 use App\Http\Livewire\Pages\Home;
+use App\Http\Livewire\Pages\Htrans;
+use App\Http\Livewire\Pages\Invoice;
+use App\Http\Livewire\Pages\Mytickets;
 use App\Http\Livewire\Pages\Promo;
 use App\Http\Livewire\Pages\Settings;
 use App\Http\Livewire\Pages\Ticket;
 use App\Http\Livewire\Pages\Tickets;
+use App\Models\HTransaksi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +36,8 @@ Route::get('/promo/{id}', Promo::class);
 
 Route::middleware(["auth", "isUser"])->group(function () {
   Route::get('/settings', Settings::class);
+  Route::get("/mytickets", Mytickets::class);
+  Route::get("/invoice/{id}", Invoice::class);
   Route::get("/checkout", Checkout::class);
 });
 
@@ -66,9 +73,9 @@ Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/cariJadwal', [adminCTR::class, 'cari_jadwal']);
   Route::get('/delJadwal', [adminCTR::class, 'hapus_jadwal']);
 
-  Route::get('/dataTrans',[adminCTR::class, 'load_trans']);
-  Route::get('/tolTrans',[adminCTR::class, 'tolak_trans']);
-  Route::get('/terTrans',[adminCTR::class, 'terima_trans']);
+  Route::get('/dataTrans', [adminCTR::class, 'load_trans']);
+  Route::get('/tolTrans', [adminCTR::class, 'tolak_trans']);
+  Route::get('/terTrans', [adminCTR::class, 'terima_trans']);
 
-  Route::get('/tes',[adminCTR::class, 'test_email']);
+  Route::get('/tes', [adminCTR::class, 'test_email']);
 });

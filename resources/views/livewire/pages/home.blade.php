@@ -14,9 +14,9 @@
     </div> --}}
 
     <div class="flex flex-col justify-center items-center w-3/4 mx-auto mt-32">
-        <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">Tiket Terlaris</p>
+        <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">Tiket Terbaru</p>
         <div class="w-full mx-auto">
-            @livewire('components.list-ticket', ["layout" => "scroll"])
+            @livewire('components.list-ticket', ["layout" => "scroll", "data" => "latest"])
         </div>
     </div>
 

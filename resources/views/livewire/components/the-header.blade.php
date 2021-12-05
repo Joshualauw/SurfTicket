@@ -15,10 +15,8 @@
                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                     <a href="/settings" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200" role="menuitem"
                         tabindex="-1" id="menu-item-0">Settings</a>
-                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200" role="menuitem"
+                    <a href="/mytickets" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200" role="menuitem"
                         tabindex="-1" id="menu-item-1">My Tickets</a>
-                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200" role="menuitem"
-                        tabindex="-1" id="menu-item-2">History</a>
                     <button
                         class="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200 border-t-2 border-gray-200"
                         role="menuitem" tabindex="-1" wire:click='signOut'>

@@ -28,7 +28,7 @@
 
         <div class="w-full mx-auto mt-8">
             <h1 class="text-3xl font-semibold text-green-600">Tiket Lainnya</h1>
-            @livewire('components.list-ticket', ["layout" => "random"])
+            @livewire('components.list-ticket', ["layout" => "scroll", "data" => "random"])
         </div>
 
     </div>

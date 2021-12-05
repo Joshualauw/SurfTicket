@@ -49,12 +49,16 @@ class SignUp extends Component
         ];
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            session()->flash("flash", ["berhasil login", "success"]);
-            if (Auth::user()->isAdmin) {
-                return redirect()->to("/admin");
+            if (!Auth::user()->isBan) {
+                $request->session()->regenerate();
+                session()->flash("flash", ["berhasil login", "success"]);
+                if (Auth::user()->isAdmin) {
+                    return redirect()->to("/admin");
+                }
+                return redirect()->to('/home');
+            } else {
+                session()->flash("flash", ["Akun anda telah di ban", "error"]);
             }
-            return redirect()->to('/home');
         } else {
             session()->flash("flash", ["Gagal login", "error"]);
         }
