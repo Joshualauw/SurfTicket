@@ -26,7 +26,7 @@
                     @if ($h->status == "dikonfirmasi")
                     <a href="/invoice/{{ $h->id }}" class="w-full">
                         <button class="py-1 px-3 hover:opacity-90 bg-green-700 text-white text-md w-full">Detail Pembelian</button>
-                    </a>          
+                    </a>
                     @endif
                 </a>
             </div>

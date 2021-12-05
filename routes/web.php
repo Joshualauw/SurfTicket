@@ -78,4 +78,6 @@ Route::middleware(["auth", 'isAdmin'])->group(function () {
   Route::get('/terTrans', [adminCTR::class, 'terima_trans']);
 
   Route::get('/tes', [adminCTR::class, 'test_email']);
+
+  Route::get('/dataTop',[adminCTR::class, 'load_top5']);
 });

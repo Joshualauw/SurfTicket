@@ -1,5 +1,90 @@
 <?php
 $pro = \App\Models\Provinsi::all();
+$jan = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 1 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($jan == null) {
+    $jan = 0;
+}
+$feb = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 2 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($feb == null) {
+    $feb = 0;
+}
+$mar = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 3 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($mar == null) {
+    $mar = 0;
+}
+$apr = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 4 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($apr == null) {
+    $apr = 0;
+}
+$mei = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 5 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($mei == null) {
+    $mei = 0;
+}
+$jun = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 6 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($jun == null) {
+    $jun = 0;
+}
+$jul = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 7 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($jul == null) {
+    $jul = 0;
+}
+$ags = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 8 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($ags == null) {
+    $ags = 0;
+}
+$sep = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 9 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($sep == null) {
+    $sep = 0;
+}
+$okt = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 10 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($okt == null) {
+    $okt = 0;
+}
+$nov = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 11 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($nov == null) {
+    $nov = 0;
+}
+$des = \App\Models\HTransaksi::join("transaksis","transaksis.transaksi_id","=","h_transaksis.id")
+                ->whereRaw("MONTH(h_transaksis.tanggal_acc) = 12 AND YEAR(h_transaksis.tanggal_acc) = ". \Carbon\Carbon::now()->year)
+                ->select(DB::raw("sum(transaksis.jumlah) as jumlah"))
+                ->first()->jumlah;
+if($des == null) {
+    $des = 0;
+}
+
 ?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -133,37 +218,15 @@ $pro = \App\Models\Provinsi::all();
                             <div class="d-md-flex mb-3">
                                 <h3 class="box-title mb-0">Top 5 penjualan ticket</h3>
                                 <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-                                    <select class="form-control shadow-none row border-top js-example-basic-single">
-                                        <option value="all">All</option>
+                                    <select class="form-control shadow-none row border-top js-example-basic-single" id="sel_pro">
                                         @foreach ($pro as $item)
                                             <option value="<?= $item->id ?>"><?= $item->nama ?></option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table no-wrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Nama</th>
-                                            <th class="border-top-0">Provinsi</th>
-                                            <th class="border-top-0">Kota</th>
-                                            <th class="border-top-0">Harga</th>
-                                            <th class="border-top-0">Jumlah</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="txt-oflo">Ticket Bali Zoo</td>
-                                            <td>Bali</td>
-                                            <td>Kab. Gianyar</td>
-                                            <td><span class="text-success">Rp. 124.000</span></td>
-                                            <td>500</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive" id="isi">
+
                             </div>
                         </div>
                     </div>
@@ -183,40 +246,40 @@ $pro = \App\Models\Provinsi::all();
             var ambil = [];
             var tgl = [];
 
-            ambil.push(12);
+            ambil.push(<?=$jan?>);
             tgl.push("Januari");
 
-            ambil.push(85);
+            ambil.push(<?=$feb?>);
             tgl.push("Febuari");
 
-            ambil.push(100);
+            ambil.push(<?=$mar?>);
             tgl.push("Maret");
 
-            ambil.push(150);
+            ambil.push(<?=$apr?>);
             tgl.push("April");
 
-            ambil.push(95);
+            ambil.push(<?=$mei?>);
             tgl.push("Mei");
 
-            ambil.push(120);
+            ambil.push(<?=$jun?>);
             tgl.push("Juni");
 
-            ambil.push(120);
+            ambil.push(<?=$jul?>);
             tgl.push("Juli");
 
-            ambil.push(120);
+            ambil.push(<?=$ags?>);
             tgl.push("Agustus");
 
-            ambil.push(120);
+            ambil.push(<?=$sep?>);
             tgl.push("September");
 
-            ambil.push(120);
+            ambil.push(<?=$okt?>);
             tgl.push("Oktober");
 
-            ambil.push(120);
+            ambil.push(<?=$nov?>);
             tgl.push("November");
 
-            ambil.push(120);
+            ambil.push(<?=$des?>);
             tgl.push("Desember");
 
 
@@ -248,8 +311,28 @@ $pro = \App\Models\Provinsi::all();
             });
         };
 
+        function loadData(){
+            var key = $("#sel_pro").val();
+            $.ajax({
+                method: "GET",
+                url: "{{ url('/dataTop') }}",
+                data: {
+                    key: key
+                },
+                success: function(res) {
+                    $("#isi").html('');
+                    console.log(res);
+                    $("#isi").append(res);
+                }
+            });
+        }
+
         $(document).ready(function() {
             initChart();
+            loadData();
+            $("#sel_pro").change(function() {
+                loadData();
+            });
         });
     </script>
 

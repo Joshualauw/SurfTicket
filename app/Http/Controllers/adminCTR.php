@@ -25,14 +25,6 @@ class adminCTR extends Controller
     //
     function to_adminHome()
     {
-        // //         SELECT    COUNT(*)
-        // // FROM      table_emp
-        // // WHERE     YEAR(ARR_DATE) = '2012'
-        // // GROUP BY  MONTH(ARR_DATE)
-
-        //         $arr = HTransaksi::where([date_format('created_at','Y'),"=",Carbon::now()->year],[Carbon::parse('created_at')->month,"=",12])->count();
-
-        //         return response()->json($arr);
         return view('admin/homeAdmin');
     }
 
@@ -501,6 +493,18 @@ class adminCTR extends Controller
     function test_email()
     {
         return view('invoice', ["ht" => HTransaksi::find(1)]);
+    }
+
+    function load_top5(Request $request){
+        $arr = Ticket::join("h_transaksis","tickets.id","=","h_transaksis.ticket_id")
+            ->join("transaksis","h_transaksis.id","=","transaksis.transaksi_id")
+            ->where("provinsi_id","=",$request->key)
+            ->groupBy("ticket_id")
+            ->select("ticket_id",DB::raw('sum(jumlah) as jum'))
+            ->orderBy("jum","DESC")
+            ->take(5)
+            ->get();
+            return view('/admin/help/tb_top5', ["arr" => $arr])->render();
     }
 
 
