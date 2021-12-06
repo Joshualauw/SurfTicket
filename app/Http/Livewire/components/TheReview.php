@@ -68,9 +68,11 @@ class TheReview extends Component
     public function render()
     {
         $reviews = Review::where("ticket_id", "=", $this->ticket->id)->paginate(3);
-        $this->userReview = Review::where([["user_id", "=", Auth::user()->id], ["ticket_id", "=", $this->ticket->id]])->first();
-        if ($this->userReview != null){
-            $this->isEdit = true;
+        if (Auth::check()){
+            $this->userReview = Review::where([["user_id", "=", Auth::user()->id], ["ticket_id", "=", $this->ticket->id]])->first();
+            if ($this->userReview != null){
+                $this->isEdit = true;
+            }
         }
         return view('livewire.components.the-review', [
             "reviews" => $reviews

@@ -26,7 +26,7 @@
         <p class="w-full text-2xl text-white bg-green-700 py-2 px-4 rounded-lg font-semibold">Reviews</p>
         @livewire('components.the-review', ["ticket" => $ticket])
 
-        <div class="w-full mx-auto mt-8">
+        <div class="w-full mt-8">
             <h1 class="text-3xl font-semibold text-green-600">Tiket Lainnya</h1>
             @livewire('components.list-ticket', ["layout" => "scroll", "data" => "random"])
         </div>
