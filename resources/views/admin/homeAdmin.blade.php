@@ -216,7 +216,7 @@ if($des == null) {
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
                             <div class="d-md-flex mb-3">
-                                <h3 class="box-title mb-0">Top 5 penjualan ticket</h3>
+                                <h3 class="box-title mb-0">penjualan ticket per provinsi</h3>
                                 <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
                                     <select class="form-control shadow-none row border-top js-example-basic-single" id="sel_pro">
                                         @foreach ($pro as $item)

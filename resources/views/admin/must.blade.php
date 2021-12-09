@@ -92,12 +92,7 @@
                         <span class="hide-menu">Transaksi Ticket</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false">
-                        <i class="far fa-file-alt" aria-hidden="true"></i>
-                        <span class="hide-menu">Report</span>
-                    </a>
-                </li>
+                
                 <li class="text-center p-20 upgrade-btn">
                     <form action="/logout" method="POST">
                         @csrf

@@ -502,7 +502,6 @@ class adminCTR extends Controller
             ->groupBy("ticket_id")
             ->select("ticket_id",DB::raw('sum(jumlah) as jum'))
             ->orderBy("jum","DESC")
-            ->take(5)
             ->get();
             return view('/admin/help/tb_top5', ["arr" => $arr])->render();
     }

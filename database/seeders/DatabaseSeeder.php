@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TicketSeeder::class,
             JadwalSeeder::class,
             ReviewSeeder::class,
+            HTransaksiSeeder::class,
             TransaksiSeeder::class
         ]);
     }
