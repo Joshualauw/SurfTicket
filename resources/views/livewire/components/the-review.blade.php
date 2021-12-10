@@ -8,8 +8,25 @@
         </div>
         @endif
         <div class="flex flex-col w-1/2">
+            @if ($userReview)
+            <div class="flex justify-start items-center space-x-3 py-3 border-b-2 border-t-2 border-green-300 mb-4">
+                <img src="{{asset($userReview->user->img_dir)}}" class="w-16 h-16 rounded-full" alt="">
+                <div class="flex flex-col justify-center items-start space-y-2">
+                    <p class="text-sm font-semibold">Review Anda</p>
+                    <div class="flex">
+                        @for ($i = 0; $i < 5; $i++) @if ($i < $userReview->rating)
+                            <i class="fas fa-star text-lg text-yellow-300"></i>
+                            @else
+                            <i class="fas fa-star text-lg text-gray-300"></i>
+                            @endif
+                        @endfor
+                    </div>
+                    <p class="text-xs">{{ $userReview->comment }}</p>
+                </div>
+            </div>
+            @endif
             @foreach ($reviews as $review)
-            <div class="flex justify-start items-center space-x-3 pb-5 border-b-2 border-gray-300">
+            <div class="flex justify-start items-center space-x-3 py-3 border-b-2 border-gray-300">
                 <img src="{{asset($review->user->img_dir)}}" class="w-16 h-16 rounded-full" alt="">
                 <div class="flex flex-col justify-center items-start space-y-2">
                     <p class="text-sm font-semibold">{{ $review->user->nama }}</p>

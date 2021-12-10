@@ -18,8 +18,8 @@ class TheReview extends Component
     public $reviewRating = 1;
     public $reviewText;
 
-    public $userReview;
     public $isEdit = false;
+    public $userReview;
 
 
     public function setRating($key)
@@ -46,8 +46,12 @@ class TheReview extends Component
                             "comment" => $this->reviewText
                         ]);
                     }
-                    $this->reset(["reviewRating", "reviewText"]);
-                    session()->flash("flash", ["Berhasil Menambahkan review!", "success"]);
+                    if (!$this->isEdit){
+                        $this->reset(["reviewRating", "reviewText"]);
+                        session()->flash("flash", ["Berhasil Menambahkan review!", "success"]);
+                    }else{
+                        session()->flash("flash", ["Berhasil Update review!", "success"]);
+                    }
                 }else{
                     session()->flash("flash", ["Belum beli tiket belum boleh review", "error"]);
                 }
@@ -63,16 +67,21 @@ class TheReview extends Component
     {
         $this->ticket = $ticket;
         $this->averageScore = $this->ticket->review->pluck('rating')->avg();
+        if (Auth::check()){
+            $this->userReview = Review::where([["ticket_id", "=", $this->ticket->id], ["user_id", "=", Auth::user()->id]])->first();
+            if ($this->userReview != null){
+                $this->reviewRating = $this->userReview->rating;
+                $this->reviewText = $this->userReview->comment;
+                $this->isEdit = true;
+            }
+        }
     }
 
     public function render()
     {
         $reviews = Review::where("ticket_id", "=", $this->ticket->id)->paginate(3);
         if (Auth::check()){
-            $this->userReview = Review::where([["user_id", "=", Auth::user()->id], ["ticket_id", "=", $this->ticket->id]])->first();
-            if ($this->userReview != null){
-                $this->isEdit = true;
-            }
+            $reviews = Review::where([["ticket_id", "=", $this->ticket->id], ["user_id", "!=", Auth::user()->id]])->paginate(3);
         }
         return view('livewire.components.the-review', [
             "reviews" => $reviews
