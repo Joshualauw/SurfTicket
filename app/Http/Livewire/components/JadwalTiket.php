@@ -51,6 +51,7 @@ class JadwalTiket extends Component
             }
         } else {
             session()->flash("flash", ["Anda harus login terlebih dahulu", "error"]);
+            return redirect()->to("/");
         }
     }
 

@@ -90,6 +90,8 @@ class TheCheckout extends Component
 
     public function render()
     {
-        return view('livewire.components.the-checkout');
+        return view('livewire.components.the-checkout', [
+            "promos" => Promo::all()
+        ]);
     }
 }
